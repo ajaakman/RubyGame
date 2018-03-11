@@ -37,7 +37,7 @@ module DOND_Game
 				@game.start
 			end
 			it "should contain a method created_by which returns the students name" do
-				studentname = "Artur Jaakman and Nazmus Sakib"			# -----Change text to your own name-----
+				studentname = "Artur Jaakman and Md Nazmus Sakib"			# -----Change text to your own name-----
 				@game.created_by.should == studentname		
 			end
 			it "should display a message showing who designed the game when the method start called" do
