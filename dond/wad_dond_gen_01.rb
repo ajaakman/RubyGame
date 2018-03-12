@@ -69,23 +69,42 @@ module DOND_Game
 		end
 		
 		def showboxes
-			# run a loop that looks through the @openedboxes array and prints unopened for 0 and opened for 1.
+			# run a loop that loops through the @openedboxes array and prints Closed for 0 and Opened for 1.
 			# need to print box like this "Box #{b}: [#{b}] Status: #{@game.openedboxes[i]}"
 			
-			@output.print "#{@chosenbox} "
+			#@openedboxes.length.times do | i |
+			#	box = i + 1
+			#	if openedboxes[i] == 0
+			#		status = "Closed"
+			#	else
+			#		status = "Opened"
+			#	end
+			#	@output.print "Box |#{box}|: Status: #{status}"				
+			#end
+			
+			@openedboxes.length.times do | i |				
+				@output.print "[#{i+1}] "
+			end			
 		end
 		
 		def showamounts
-			# Loop through @amount array and print them in two colums.
-			@output.puts "#{c1}   #{c2}"
+			# Loop through @amounts array and print them in two colums.
+			#@output.puts "#{c1}   #{c2}"
+			@amounts.length.times do | i |
+				@output.puts "#{@amounts[i]}   #{@amounts[i+11]}"
+			end			
 		end
 		
 		def removeamount value
 			# when this is called take the argument (value) find it in the @amounts array and replace it with "    "
+			@amounts.length.times do | i |
+				if @amounts[i] == value
+					@amounts[i] = "    "
+				end
+			end
 		end
 		
 		def setchosenbox box
-			# i think this is right.
 			@chosenbox = box
 		end
 		
@@ -93,13 +112,14 @@ module DOND_Game
 			return @chosenbox
 		end
 		
-		def diplaychosenbox
-			# should be easy, but not sure why this doesnet work.
+		def displaychosenbox
 			@output.puts "Chosen box: [#{@chosenbox}]"
 		end
 		
 		def displaychosenboxvalue
 			# take the @chosenbox variable diplay its number. Then use that number to find the corresponding value from the @sequence array?
+			box = @chosenbox
+			value = @sequence[box-1]
 			@output.puts "Chosen box: [#{box}] contains: #{value}"
 		end
 		
@@ -113,21 +133,30 @@ module DOND_Game
 		
 		def displayanalysis
 			# loop through @ opened boxes array and print index number and "Closed if value is 0 and Open if value is 1. "#{g} Status: #{s}"
+			@output.puts "Game analysis..."
 			
+			@openedboxes.length.times do | i |
+				box = i + 1
+				if openedboxes[i] == 0
+					status = "Closed"
+				else
+					status = "Opened"
+				end
+				@output.puts "[#{box}] Status: #{status}"				
+			end
 		end
 		
 		def boxvalid guess
-			# dont know why this doesn't work for some reason test is converting int to string before comparing.
-			if guess > 0 and guess <= 22
-				return true
+			if guess.to_i > 0 and guess.to_i <= 22
+				return 0
 			else
-				return false
+				return 1
 			end			
 		end
 		
-		def showboxesselected
+		def showselectedboxes
 			# print @selectedboxes array. test has some function naming mistakes.
-			@output.puts "Log: #{@selectedboxes.inspect}"
+			@output.puts "Log: #{@selectedboxes.inspect}"			
 		end
 	
 		def displayselectboxprompt
@@ -136,9 +165,12 @@ module DOND_Game
 		
 		def openbox guess
 			# based on the function argument find box in @openedboxes array and set it to 1.
-			# g = box number based on guess
-			# s = "Open" if 1 "Closed" if 0					
-			@output.print "#{g} Status: #{s}"
+			# box = box number based on guess
+			# status = "Open" if 1 "Closed" if 0
+			@openedboxes[guess.to_i - 1] = 1
+			b = guess.to_i
+			s = @openedboxes[guess]
+			@output.print "#{b} Status: #{s}"
 		end
 		
 		def bankerphoneswithvalue
