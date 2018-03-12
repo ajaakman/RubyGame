@@ -47,37 +47,46 @@ module DOND_Game
 		
 		def resetgame
 			@output.puts "New game..."
-			@sequence = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-			selectedboxes = []
-			openedboxes= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-			chosenbox = 0
-			selectedbox = 0
-			turn = 0
-			winner = 0
-			played = 0
-			wins = 0
-			losses = 0
-			guess = ""
+			@sequence = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+			@selectedboxes = []
+			@openedboxes= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+			@chosenbox = 0
+			@selectedbox = 0
+			@turn = 0
+			@winner = 0
+			@played = 0
+			@wins = 0
+			@losses = 0
+			@guess = ""
 			@values = [0.01,0.10,0.50,1.00,5.00,10.00,50.00,100.00,250.00,500.00,750.00,1000.00,3000.00,5000.00,10000.00,15000.00,20000.00,35000.00,50000.00,75000.00,100000.00,250000.00]
-			amounts = values
+			@amounts = @values
 		end
 		
 		def assignvaluestoboxes
+			# not sure if this is correct.
 			@sequence = @values
 			@sequence.shuffle			
 		end
 		
 		def showboxes
-		
+			# run a loop that looks through the @openedboxes array and prints unopened for 0 and opened for 1.
+			# need to print box like this "Box #{b}: [#{b}] Status: #{@game.openedboxes[i]}"
+			
+			@output.print "#{@chosenbox} "
 		end
 		
 		def showamounts
+			# Loop through @amount array and print them in two colums.
+			@output.puts "#{c1}   #{c2}"
 		end
 		
-		def removeamount
+		def removeamount value
+			# when this is called take the argument (value) find it in the @amounts array and replace it with "    "
 		end
 		
-		def setchosenbox
+		def setchosenbox box
+			# i think this is right.
+			@chosenbox = box
 		end
 		
 		def getchosenbox
@@ -85,55 +94,79 @@ module DOND_Game
 		end
 		
 		def diplaychosenbox
-			
+			# should be easy, but not sure why this doesnet work.
+			@output.puts "Chosen box: [#{@chosenbox}]"
 		end
 		
+		def displaychosenboxvalue
+			# take the @chosenbox variable diplay its number. Then use that number to find the corresponding value from the @sequence array?
+			@output.puts "Chosen box: [#{box}] contains: #{value}"
+		end
+		
+		def displaychosenboxprompt			
+			@output.puts "Enter the number of the box you wish to keep."
+		end
+				
 		def displaychosenboxerror
-			
+			@output.puts "Error: Box number must be 1 to 22."
 		end
 		
 		def displayanalysis
+			# loop through @ opened boxes array and print index number and "Closed if value is 0 and Open if value is 1. "#{g} Status: #{s}"
 			
 		end
 		
-		def boxvalid
-			
+		def boxvalid guess
+			# dont know why this doesn't work for some reason test is converting int to string before comparing.
+			if guess > 0 and guess <= 22
+				return true
+			else
+				return false
+			end			
 		end
 		
 		def showboxesselected
-		
+			# print @selectedboxes array. test has some function naming mistakes.
+			@output.puts "Log: #{@selectedboxes.inspect}"
 		end
 	
-		def displayselectedboxprompt
-			
+		def displayselectboxprompt
+			@output.puts "Enter the number of the box you wish to open. Enter returns to menu."
 		end
 		
-		def openbox
-			
+		def openbox guess
+			# based on the function argument find box in @openedboxes array and set it to 1.
+			# g = box number based on guess
+			# s = "Open" if 1 "Closed" if 0					
+			@output.print "#{g} Status: #{s}"
 		end
 		
 		def bankerphoneswithvalue
-			
+			offer = bankercalcsvalue
+			@output.puts "Banker offers you for your chosen box: #{offer}"
 		end
 		
-		def bankercalcsvalue
-			
+		def bankercalcsvalue			
+			# Loop through and add all values of unopened boxes. Divide by number of closed boxes using the numberofboxesclosed function and set var offer to that value.			
+			return offer
 		end
 		
 		def numberofboxesclosed
-		
+			#loop through opened @openedboxes array. return number of 0 values array
+			@openedboxes 
+			return 
 		end
 	
 		def incrementturn
-			@turn += 1
+			@turn += 1			
 		end
 		
 		def getturnsleft
-			return @turnsleft
+			# find out what containing goes left means
 		end
 		
 		def finish
-			
+			@output.puts "... game finished."
 		end
 	
 		# Any code/methods aimed at passing the RSpect tests should be added above.
