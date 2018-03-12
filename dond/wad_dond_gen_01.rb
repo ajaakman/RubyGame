@@ -83,7 +83,11 @@ module DOND_Game
 			#end
 			
 			@openedboxes.length.times do | i |				
-				@output.print "[#{i+1}] "
+				if i == @chosenbox
+					@output.print "[#{i+1}] "
+				else
+					@output.print "[#{i+1}] "
+				end
 			end			
 		end
 		
@@ -136,13 +140,14 @@ module DOND_Game
 			@output.puts "Game analysis..."
 			
 			@openedboxes.length.times do | i |
-				box = i + 1
 				if openedboxes[i] == 0
 					status = "Closed"
+					box = "[#{i+1}]"
 				else
 					status = "Opened"
+					box = "|#{i+1}|"
 				end
-				@output.puts "[#{box}] Status: #{status}"				
+				@output.puts "#{box} Status: #{status}"				
 			end
 		end
 		
@@ -173,28 +178,33 @@ module DOND_Game
 			@output.print "#{b} Status: #{s}"
 		end
 		
-		def bankerphoneswithvalue
-			offer = bankercalcsvalue
+		def bankerphoneswithvalue offer
 			@output.puts "Banker offers you for your chosen box: #{offer}"
 		end
 		
-		def bankercalcsvalue			
+		def bankercalcsvalue value			
 			# Loop through and add all values of unopened boxes. Divide by number of closed boxes using the numberofboxesclosed function and set var offer to that value.			
-			return offer
+			return value/2
 		end
 		
 		def numberofboxesclosed
 			#loop through opened @openedboxes array. return number of 0 values array
-			@openedboxes 
-			return 
+			count = 0
+			@openedboxes.length.times do | i |
+				if openedboxes[i] == 0
+				count += 1							
+				end
+			end			
+			return count
 		end
 	
 		def incrementturn
-			@turn += 1			
+			@turn += 1
+			
 		end
 		
 		def getturnsleft
-			# find out what containing goes left means
+			return GOES - @turn
 		end
 		
 		def finish
