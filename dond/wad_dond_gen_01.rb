@@ -71,24 +71,18 @@ module DOND_Game
 		def showboxes
 			# run a loop that loops through the @openedboxes array and prints Closed for 0 and Opened for 1.
 			# need to print box like this "Box #{b}: [#{b}] Status: #{@game.openedboxes[i]}"
-			
-			#@openedboxes.length.times do | i |
-			#	box = i + 1
-			#	if openedboxes[i] == 0
-			#		status = "Closed"
-			#	else
-			#		status = "Opened"
-			#	end
-			#	@output.print "Box |#{box}|: Status: #{status}"				
-			#end
-			
 			@openedboxes.length.times do | i |				
-				if i == @chosenbox
-					@output.print "[#{i+1}] "
+				if i == @chosenbox-1 and @chosenbox != 0
+					box = "*#{i+1}*"
 				else
-					@output.print "[#{i+1}] "
+					if @openedboxes[i] == 0					
+						box = "[#{i+1}]"
+					else  @openedboxes[i] 					
+						box = "|#{i+1}|"				
+					end
 				end
-			end			
+				@output.print "#{box} "
+			end		
 		end
 		
 		def showamounts
@@ -139,13 +133,14 @@ module DOND_Game
 			# loop through @ opened boxes array and print index number and "Closed if value is 0 and Open if value is 1. "#{g} Status: #{s}"
 			@output.puts "Game analysis..."
 			
-			@openedboxes.length.times do | i |
-				if openedboxes[i] == 0
+			@openedboxes.length.times do | i |				
+				if @openedboxes[i] == 0
 					status = "Closed"
 					box = "[#{i+1}]"
-				else
+				else if @openedboxes[i] == 1
 					status = "Opened"
 					box = "|#{i+1}|"
+					end
 				end
 				@output.puts "#{box} Status: #{status}"				
 			end
@@ -169,13 +164,14 @@ module DOND_Game
 		end
 		
 		def openbox guess
+			
 			# based on the function argument find box in @openedboxes array and set it to 1.
 			# box = box number based on guess
 			# status = "Open" if 1 "Closed" if 0
 			@openedboxes[guess.to_i - 1] = 1
-			b = guess.to_i
-			s = @openedboxes[guess]
-			@output.print "#{b} Status: #{s}"
+			
+			@output.puts ("#{@openedboxes[guess.to_i - 1]} Status: Opened")
+			
 		end
 		
 		def bankerphoneswithvalue offer
