@@ -42,91 +42,103 @@ module DOND_Game
 		# Outer Loop Starts. 
 			
 			g.resetgame				# calls resetgame method
-			@output.puts "\n"			# outputs newline to terminal command line window
-		
-			# Show StartMenu()
 			
-			case @input
-			when "New Game"
-				#break case.
-			when "Exit Game"
-				#break outer Loop.
-			when "Leaderboards"
-				# Print Leaderboards. Show StartMenu()
-			else
-				@output.puts "Invalid Input"
-				# Show StartMenu()
-			end			
-		
-			# Present boxes. Have Player select their box.
 			
-			case @input
-			when #valid box number
-				# remove box from array
-				# break
-			else
-				@output.puts "Invalid Input"
-				# Display Table
-				# Tell player to choose box
-			end			
-			
-			# Inner Loop Starts.
-				
-				# Display Table.
-				# Diplay Boxes.
-				# Ask player to choose box to open
-				case @input
-				when #valid box number
-					# remove box from array
-					# break
+			begin
+				g.displayStartMenu
+				userInput = @input.gets.chomp
+				case userInput
+				when "1"
+					break
+				when "2" # LeaderBoards
+					# Print Leaderboards
+					@output.puts "These Are the Leaderboards"					
+				when "9" # Exit
+					g.finish
+					exit
 				else
-					@output.puts "Invalid Input"
-					# Display boxes
-					# Tell player to choose box
-				end
-				
-				# Show Menu()
-				
-				case @input					
-				when "New Game"
-					# Break inner loop.
-				when "Analysis"
-					# Diplay Boxes.
-					# Show Menu()
-				when "Exit"
-					# Display Table
-					# Show Menu()
-				else
-					@output.puts "Invalid Input"
-					# Show Menu()
+					@output.puts "Invalid Input"					
 				end				
-				
-				if # more than 2 boxes remainign				
-					# Display Table.
-					# Display Offer.
-					# Ask player to take offer or continue playing.
-					case @input
-					when "Accept"
-						# Run finish game logic. Set offer to win amount and show amount in players box.
-						# break
-					when "Deny"
-						# break
-					else
-						@output.puts "Invalid Input"
-						# Display Table.
-						# Display Offer.
-						# Ask player to take offer or continue playing.
-					end					
-				else				
-					# Run finish game logic. Open players box and set that to amount won.
-				end
-				
-			#Inner Loop  ends
+			end while userInput != 1
+			@output.puts "Playing game.........."
 			
-			# Diplay End Game Message. How much the player won.
+			userInput = @input.gets
+			if userInput == "\n"
+				@output.puts "Paused"
+			else
+				@output.puts "Invalid Input. Press Enter to Display Menu"					
+			end	
+					
+		#	# Present boxes. Have Player select their box.
+		#	
+		#	case @input
+		#	when #valid box number
+		#		# remove box from array
+		#		# break
+		#	else
+		#		@output.puts "Invalid Input"
+		#		# Display Table
+		#		# Tell player to choose box
+		#	end			
+		#	
+		#	# Inner Loop Starts.
+		#		
+		#		# Display Table.
+		#		# Diplay Boxes.
+		#		# Ask player to choose box to open
+		#		case @input
+		#		when #valid box number
+		#			# remove box from array
+		#			# break
+		#		else
+		#			@output.puts "Invalid Input"
+		#			# Display boxes
+		#			# Tell player to choose box
+		#		end
+		#		
+		#		# Show Menu()
+		#		
+		#		case @input					
+		#		when "New Game"
+		#			# Break inner loop.
+		#		when "Analysis"
+		#			# Diplay Boxes.
+		#			# Show Menu()
+		#		when "Exit"
+		#			# Display Table
+		#			# Show Menu()
+		#		else
+		#			@output.puts "Invalid Input"
+		#			# Show Menu()
+		#		end				
+		#		
+		#		if # more than 2 boxes remainign				
+		#			# Display Table.
+		#			# Display Offer.
+		#			# Ask player to take offer or continue playing.
+		#			case @input
+		#			when "Accept"
+		#				# Run finish game logic. Set offer to win amount and show amount in players box.
+		#				# break
+		#			when "Deny"
+		#				# break
+		#			else
+		#				@output.puts "Invalid Input"
+		#				# Display Table.
+		#				# Display Offer.
+		#				# Ask player to take offer or continue playing.
+		#			end					
+		#		else				
+		#			# Run finish game logic. Open players box and set that to amount won.
+		#		end
+		#		
+		#	#Inner Loop  ends
+		#	
+		#	# Diplay End Game Message. How much the player won.
+		#
+		## Outer Loop Ends.
 		
-		# Outer Loop Ends.
-		g.finish				# calls finish method
+		g.finish
 						
 	# Any code added to command line game should be added above.
 	

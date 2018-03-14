@@ -45,6 +45,10 @@ module DOND_Game
 			@output.puts "Menu: (1) Play | (2) New | (3) Analysis | (9) Exit"
 		end
 		
+		def displayStartMenu
+			@output.puts "Menu: (1) Play | (2) LeaderBoards | (9) Exit"
+		end
+		
 		def resetgame
 			@output.puts "New game..."
 			@sequence = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
