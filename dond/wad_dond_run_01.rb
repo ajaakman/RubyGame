@@ -60,35 +60,50 @@ module DOND_Game
 		
 			# Present boxes. Have Player select their box.
 			
+			case @input
+			when #valid box number
+				# remove box from array
+				# break
+			else
+				@output.puts "Invalid Input"
+				# Display Table
+				# Tell player to choose box
+			end			
+			
 			# Inner Loop Starts.
+				
+				# Display Table.
+				# Diplay Boxes.
+				# Ask player to choose box to open
+				case @input
+				when #valid box number
+					# remove box from array
+					# break
+				else
+					@output.puts "Invalid Input"
+					# Display boxes
+					# Tell player to choose box
+				end
 				
 				# Show Menu()
 				
 				case @input					
-				when "New"
+				when "New Game"
 					# Break inner loop.
 				when "Analysis"
 					# Diplay Boxes.
 					# Show Menu()
 				when "Exit"
 					# Display Table
-					# Tell player to choose box
-					case @input
-					when #valid box number
-						# remove box from array
-						# break
-					else
-						@output.puts "Invalid Input"
-						# Display Table
-						# Tell player to choose box
-					end
+					# Show Menu()
 				else
 					@output.puts "Invalid Input"
 					# Show Menu()
 				end				
 				
 				if # more than 2 boxes remainign				
-					# Display offer.
+					# Display Table.
+					# Display Offer.
 					# Ask player to take offer or continue playing.
 					case @input
 					when "Accept"
@@ -98,7 +113,8 @@ module DOND_Game
 						# break
 					else
 						@output.puts "Invalid Input"
-						# Display offer.
+						# Display Table.
+						# Display Offer.
 						# Ask player to take offer or continue playing.
 					end					
 				else				
