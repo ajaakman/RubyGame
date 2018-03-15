@@ -36,21 +36,19 @@ module DOND_Game
 	if game == "1"
 		
 		# Any code added to command line game should be added below.
-
+		
 		g.start	# Calls start method
 		
 		begin # Outer game loop start
 			
 			g.resetgame				# calls resetgame method
 			g.displayStartMenu
-				
-			@output.puts "Playing Game... \n"
-			
 			g.assignvaluestoboxes
-			g.showamounts
-			g.showboxes
-			
+				
+			@output.puts "Starting Game... \n"
+						
 			begin
+				g.showboxes
 				@output.puts "\n"
 				g.displaychosenboxprompt				
 				userInput = @input.gets.chomp
@@ -67,22 +65,46 @@ module DOND_Game
 			end while true
 			
 			g.clearScreen
+			g.displaychosenbox
+			@output.puts "Press Enter to Continue."
+			@input.gets.chomp			
+			g.clearScreen
 								
 			begin # Inner game loop starts.
-		
-			
 				begin
-					#g.showamounts
+					g.showamounts
 					#g.showboxes
 					@output.puts "\n"
 					@output.puts "Debugging array: #{g.selectedboxes.length}" 
 					g.displayselectboxprompt
 					userInput = @input.gets
 					case userInput
-						when "\n"
-							#run pause menu logic
+						when "\n"							
 							g.clearScreen
+							begin
+							@output.puts "\n" + '-------------------------------------------------------------------------' + "\n"
 							g.displaymenu
+							@output.puts '-------------------------------------------------------------------------' + "\n"
+							case @input.gets.chomp
+								when "1" # Play
+									g.clearScreen
+									break
+								when "2" # New
+									g.clearScreen
+									# Needs to break out of inner loop
+								when "3" # Analysis
+									g.clearScreen
+									g.showboxes
+									#@output.puts "Invalid Input"
+								when "9" # Exit
+									g.clearScreen
+									g.finish
+									exit
+								else
+									g.clearScreen
+									@output.puts "Invalid Input"					
+								end
+							end while true							
 							@output.puts "\n"						
 						else						
 							case g.boxvalid userInput
@@ -102,33 +124,9 @@ module DOND_Game
 									@output.puts "Not a valid box number. Press enter to show menu or select valid box number"
 							end					
 					end
-					
 				end while true
-		#		case @input
-		#		when #valid box number
-		#			# remove box from array
-		#			# break
-		#		else
-		#			@output.puts "Invalid Input"
-		#			# Display boxes
-		#			# Tell player to choose box
-		#		end
-		#		
-		#		# Show Menu()
-		#		
-		#		case @input					
-		#		when "New Game"
-		#			# Break inner loop.
-		#		when "Analysis"
-		#			# Diplay Boxes.
-		#			# Show Menu()
-		#		when "Exit"
-		#			# Display Table
-		#			# Show Menu()
-		#		else
-		#			@output.puts "Invalid Input"
-		#			# Show Menu()
-		#		end				
+				
+					
 		#		
 		#		if # more than 2 boxes remainign				
 		#			# Display Table.
@@ -149,7 +147,7 @@ module DOND_Game
 		#		else				
 		#			# Run finish game logic. Open players box and set that to amount won.
 		#		end
-		#		
+				
 			end while true # Inner game loop ends.
 		#	
 		#	# Diplay End Game Message. How much the player won.
@@ -158,7 +156,7 @@ module DOND_Game
 		end while true # Outer game loop end.
 		
 		g.finish
-						
+				
 	# Any code added to command line game should be added above.
 	
 		exit	# Does not allow command-line game to run code below relating to web-based version
