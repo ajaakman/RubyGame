@@ -46,13 +46,6 @@ module DOND_Game
 				
 			@output.puts "Playing Game... \n"
 			
-			#userInput = @input.gets
-			#if userInput == "\n"
-			#	@output.puts "Paused"
-			#else
-			#	@output.puts "Invalid Input. Press Enter to Display Menu"					
-			#end	
-			
 			g.assignvaluestoboxes
 			g.showamounts
 			g.showboxes
@@ -60,11 +53,12 @@ module DOND_Game
 			begin
 				@output.puts "\n"
 				g.displaychosenboxprompt				
-				UserInput = @input.gets.chomp
+				userInput = @input.gets.chomp
 				
-				case g.boxvalid UserInput
+				case g.boxvalid userInput
 					when 0
-					g.setchosenbox UserInput.to_i
+					g.setchosenbox userInput.to_i
+					g.selectedboxes.push userInput.to_i 
 					break
 					else
 					g.clearScreen
@@ -73,20 +67,43 @@ module DOND_Game
 			end while true
 			
 			g.clearScreen
-			g.displaychosenbox
-			g.showboxes
-					
+								
 			begin # Inner game loop starts.
 		
-		
-		
-		
-		
-		
-				
-		#		# Display Table.
-		#		# Diplay Boxes.
-		#		# Ask player to choose box to open
+			
+				begin
+					#g.showamounts
+					#g.showboxes
+					@output.puts "\n"
+					@output.puts "Debugging array: #{g.selectedboxes.length}" 
+					g.displayselectboxprompt
+					userInput = @input.gets
+					case userInput
+						when "\n"
+							#run pause menu logic
+							g.clearScreen
+							g.displaymenu
+							@output.puts "\n"						
+						else						
+							case g.boxvalid userInput
+								when 0
+									if g.selectedboxes.include?(userInput.to_i)
+										g.clearScreen
+										@output.puts "Box already selected. Try Again"
+									else
+										g.clearScreen
+										g.selectedboxes.push userInput.to_i
+										@output.puts "Box Successfully Selected."
+										# logic to select box.
+										break
+									end
+								else
+									g.clearScreen
+									@output.puts "Not a valid box number. Press enter to show menu or select valid box number"
+							end					
+					end
+					
+				end while true
 		#		case @input
 		#		when #valid box number
 		#			# remove box from array
