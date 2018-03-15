@@ -70,13 +70,18 @@ module DOND_Game
 					@output.puts "These Are the Leaderboards"					
 				when "9" # Exit
 					clearScreen
-					g.finish
+					finish
 					exit
 				else
 					clearScreen
 					@output.puts "Invalid Input"					
 				end
 			end while true
+		end
+			
+		def showselectedbox guess
+			@selectedbox = @sequence[guess-1]
+			@output.puts "Selected box: |#{guess}| Amount: #{@sequence[guess-1]} \n"
 		end
 		
 		def resetgame
@@ -93,13 +98,13 @@ module DOND_Game
 			@losses = 0
 			@guess = ""
 			@values = [0.01,0.10,0.50,1.00,5.00,10.00,50.00,100.00,250.00,500.00,750.00,1000.00,3000.00,5000.00,10000.00,15000.00,20000.00,35000.00,50000.00,75000.00,100000.00,250000.00]
-			@amounts = @values
+			@amounts = @values.dup
 		end
 		
 		def assignvaluestoboxes
 			# not sure if this is correct.
-			@sequence = @values
-			@sequence.shuffle			
+			@sequence = @values.dup
+			@sequence.shuffle!			
 		end
 		
 		def showboxes
@@ -214,7 +219,16 @@ module DOND_Game
 		
 		def bankercalcsvalue value			
 			# Loop through and add all values of unopened boxes. Divide by number of closed boxes using the numberofboxesclosed function and set var offer to that value.			
-			return value/2
+			value = 0
+			total = 0.0
+			count = 0.0
+			@amounts.length.times do | i |
+				if @amounts[i] != "    "
+					total += @amounts[i].to_f
+					count += 1.0
+				end
+			end			
+			return (total/count).to_i
 		end
 		
 		def numberofboxesclosed
