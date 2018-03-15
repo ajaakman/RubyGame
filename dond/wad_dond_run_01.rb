@@ -37,7 +37,7 @@ module DOND_Game
 		
 		# Any code added to command line game should be added below.
 		
-		catch :restart do
+		catch :restart do		
 		
 		g.start	# Calls start method
 		
@@ -45,9 +45,7 @@ module DOND_Game
 			
 			g.resetgame				# calls resetgame method
 			g.displayStartMenu
-			g.assignvaluestoboxes
-				
-			@output.puts "Starting Game... \n"
+			g.assignvaluestoboxes					
 						
 			begin
 				g.showboxes
@@ -90,14 +88,17 @@ module DOND_Game
 							case @input.gets.chomp
 								when "1" # Play
 									g.clearScreen
+									@output.puts "Continuing Game."
 									break
 								when "2" # New
 									g.clearScreen
+									@output.puts "Restarting Game. Press Enter to Continue."
+									@input.gets.chomp
 									throw :restart
 								when "3" # Analysis
 									g.clearScreen
-									g.showboxes
-									#@output.puts "Invalid Input"
+									@output.puts "Remaining boxes. Enter 1 to continue playing."
+									g.showboxes									
 								when "9" # Exit
 									g.clearScreen
 									g.finish
@@ -153,8 +154,8 @@ module DOND_Game
 			end while true # Inner game loop ends.			
 		#	# Diplay End Game Message. How much the player won.
 		#
-		end while true # Outer game loop end.
 		end # End of :restart loop.		
+		end while true # Outer game loop end.
 		
 		g.finish
 				
