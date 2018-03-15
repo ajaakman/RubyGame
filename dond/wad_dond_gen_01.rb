@@ -27,6 +27,7 @@ module DOND_Game
 		# Any code/methods aimed at passing the RSpect tests should be added below.
 	
 		def start
+			clearScreen
 			@output.puts "Welcome to Deal or No Deal!"
 			@output.puts "Designed by: #{created_by}"
 			@output.puts "StudentID: #{student_id}"
@@ -42,11 +43,40 @@ module DOND_Game
 		end
 		
 		def displaymenu
-			@output.puts "Menu: (1) Play | (2) New | (3) Analysis | (9) Exit"
+			@output.puts "Menu: (1) Play | (2) New | (3) Analysis | (9) Exit"			
 		end
 		
+		def clearScreen # https://stackoverflow.com/questions/3170553/how-can-i-clear-the-terminal-in-ruby
+			puts "amit"
+			if RUBY_PLATFORM =~ /win32|win64|\.NET|windows|cygwin|mingw32/i
+			   system('cls')
+			 else
+			   system('clear')
+			end
+		 end
+		
 		def displayStartMenu
+			begin
+			@output.puts "\n" + '-------------------------------------------------------------------------' + "\n"
 			@output.puts "Menu: (1) Play | (2) LeaderBoards | (9) Exit"
+			@output.puts '-------------------------------------------------------------------------' + "\n"
+			case @input.gets.chomp
+				when "1"
+				clearScreen
+					break
+				when "2" # LeaderBoards
+					clearScreen
+					# Print Leaderboards
+					@output.puts "These Are the Leaderboards"					
+				when "9" # Exit
+					clearScreen
+					g.finish
+					exit
+				else
+					clearScreen
+					@output.puts "Invalid Input"					
+				end
+			end while true
 		end
 		
 		def resetgame
@@ -92,7 +122,7 @@ module DOND_Game
 		def showamounts
 			# Loop through @amounts array and print them in two colums.
 			#@output.puts "#{c1}   #{c2}"
-			@amounts.length.times do | i |
+			(@amounts.length/2).times do | i |
 				@output.puts "#{@amounts[i]}   #{@amounts[i+11]}"
 			end			
 		end

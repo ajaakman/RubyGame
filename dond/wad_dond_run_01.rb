@@ -37,52 +37,53 @@ module DOND_Game
 		
 		# Any code added to command line game should be added below.
 
-		g.start				# calls start method
+		g.start	# Calls start method
 		
-		# Outer Loop Starts. 
+		begin # Outer game loop start
 			
 			g.resetgame				# calls resetgame method
+			g.displayStartMenu
+				
+			@output.puts "Playing Game... \n"
 			
+			#userInput = @input.gets
+			#if userInput == "\n"
+			#	@output.puts "Paused"
+			#else
+			#	@output.puts "Invalid Input. Press Enter to Display Menu"					
+			#end	
+			
+			g.assignvaluestoboxes
+			g.showamounts
+			g.showboxes
 			
 			begin
-				g.displayStartMenu
-				userInput = @input.gets.chomp
-				case userInput
-				when "1"
+				@output.puts "\n"
+				g.displaychosenboxprompt				
+				UserInput = @input.gets.chomp
+				
+				case g.boxvalid UserInput
+					when 0
+					g.setchosenbox UserInput.to_i
 					break
-				when "2" # LeaderBoards
-					# Print Leaderboards
-					@output.puts "These Are the Leaderboards"					
-				when "9" # Exit
-					g.finish
-					exit
-				else
-					@output.puts "Invalid Input"					
-				end				
-			end while userInput != 1
-			@output.puts "Playing game.........."
+					else
+					g.clearScreen
+					g.displaychosenboxerror
+				end
+			end while true
 			
-			userInput = @input.gets
-			if userInput == "\n"
-				@output.puts "Paused"
-			else
-				@output.puts "Invalid Input. Press Enter to Display Menu"					
-			end	
+			g.clearScreen
+			g.displaychosenbox
+			g.showboxes
 					
-		#	# Present boxes. Have Player select their box.
-		#	
-		#	case @input
-		#	when #valid box number
-		#		# remove box from array
-		#		# break
-		#	else
-		#		@output.puts "Invalid Input"
-		#		# Display Table
-		#		# Tell player to choose box
-		#	end			
-		#	
-		#	# Inner Loop Starts.
-		#		
+			begin # Inner game loop starts.
+		
+		
+		
+		
+		
+		
+				
 		#		# Display Table.
 		#		# Diplay Boxes.
 		#		# Ask player to choose box to open
@@ -132,11 +133,12 @@ module DOND_Game
 		#			# Run finish game logic. Open players box and set that to amount won.
 		#		end
 		#		
-		#	#Inner Loop  ends
+			end while true # Inner game loop ends.
 		#	
 		#	# Diplay End Game Message. How much the player won.
 		#
-		## Outer Loop Ends.
+		@output.puts "Ending Game... \n"
+		end while true # Outer game loop end.
 		
 		g.finish
 						
