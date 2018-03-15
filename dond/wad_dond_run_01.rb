@@ -37,6 +37,8 @@ module DOND_Game
 		
 		# Any code added to command line game should be added below.
 		
+		catch :restart do
+		
 		g.start	# Calls start method
 		
 		begin # Outer game loop start
@@ -91,7 +93,7 @@ module DOND_Game
 									break
 								when "2" # New
 									g.clearScreen
-									# Needs to break out of inner loop
+									throw :restart
 								when "3" # Analysis
 									g.clearScreen
 									g.showboxes
@@ -148,12 +150,11 @@ module DOND_Game
 		#			# Run finish game logic. Open players box and set that to amount won.
 		#		end
 				
-			end while true # Inner game loop ends.
-		#	
+			end while true # Inner game loop ends.			
 		#	# Diplay End Game Message. How much the player won.
 		#
-		@output.puts "Ending Game... \n"
 		end while true # Outer game loop end.
+		end # End of :restart loop.		
 		
 		g.finish
 				
