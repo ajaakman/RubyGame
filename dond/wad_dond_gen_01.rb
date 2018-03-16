@@ -25,25 +25,38 @@ module DOND_Game
 		end
 		
 		# Any code/methods aimed at passing the RSpect tests should be added below.
-	
-		def start
+		
+		#--------------------------------No test methods---------------------------------------------------------
+		def menu
 			clearScreen
-			@output.puts "Welcome to Deal or No Deal!"
-			@output.puts "Designed by: #{created_by}"
-			@output.puts "StudentID: #{student_id}"
-			@output.puts "Starting game..."
-		end
-		
-		def created_by
-			return "Artur Jaakman and Md Nazmus Sakib"
-		end
-		
-		def student_id
-			return "51773211 and 51773617"
-		end
-		
-		def displaymenu
-			@output.puts "Menu: (1) Play | (2) New | (3) Analysis | (9) Exit"			
+			begin
+				@output.puts "\n" + '-------------------------------------------------------------------------' + "\n"
+				displaymenu
+				@output.puts '-------------------------------------------------------------------------' + "\n"
+				case @input.gets.chomp
+					when "1" # Play
+						clearScreen
+						@output.puts "Continuing Game."
+						break
+					when "2" # New
+						clearScreen
+						@output.puts "Restarting Game. Press Enter to Continue."
+						@input.gets.chomp
+						throw :restart
+					when "3" # Analysis
+						clearScreen
+						@output.puts "Remaining boxes. Enter 1 to continue playing."
+						showboxes									
+					when "9" # Exit
+						clearScreen
+						finish
+						exit
+					else
+						clearScreen
+						@output.puts "Invalid Input"					
+				end
+			end while true
+			@output.puts "\n"
 		end
 		
 		def clearScreen # https://stackoverflow.com/questions/3170553/how-can-i-clear-the-terminal-in-ruby
@@ -62,7 +75,7 @@ module DOND_Game
 			@output.puts '-------------------------------------------------------------------------' + "\n"
 			case @input.gets.chomp
 				when "1"
-				clearScreen
+					clearScreen
 					break
 				when "2" # LeaderBoards
 					clearScreen
@@ -78,12 +91,128 @@ module DOND_Game
 				end
 			end while true
 		end
+		
+		def answerbanker
+			begin
+				showamounts
+				bankerphoneswithvalue bankercalcsvalue 0
+				@output.puts "Do you accept the bankers offer? Input y or n."							
+				case @input.gets.chomp
+					when "y" 									
+						clearScreen
+						@output.puts "CONGRATULATIONS! YOU WON #{bankerphoneswithvalue bankercalcsvalue 0}!"
+						@output.puts "You could have won #{sequence[chosenbox-1]}"
+						@output.puts "Press Enter to try again."
+						@input.gets.chomp
+						throw :restart
+					when "n"
+						clearScreen
+						break
+					else
+						clearScreen
+						@output.puts "Invalid Input"					
+				end
+			end while true
+		end
+		
+		def lastbox
+			clearScreen
+			showamounts
+			@output.puts "Last Box. Press Enter to open your box."
+			@input.gets.chomp
+			clearScreen						
+			@output.puts "CONGRATULATIONS! YOU WON #{sequence[chosenbox-1]}"
+			@output.puts "Press Enter to try again."
+			@input.gets.chomp
+			throw :restart
+		end
+		
+		def innergameloop
+			begin
+				showamounts				
+				@output.puts "\n"					 
+				displayselectboxprompt
+				userInput = @input.gets
+				case userInput
+				when "\n"					
+					menu												
+				else						
+					case boxvalid userInput
+						when 0
+							if selectedboxes.include?(userInput.to_i)
+								clearScreen
+								@output.puts "Box already selected. Try Again"
+							else
+								openbox userInput.to_i
+								clearScreen
+								selectedboxes.push userInput.to_i
+								showselectedbox userInput.to_i
+								removeamount selectedbox										
+								break
+							end
+						else
+							clearScreen
+							@output.puts "Not a valid box number. Press enter to show menu or select valid box number"
+					end					
+				end
+			end while true
+		end
+		
+		def outergameloop
 			
+			resetgame				
+			displayStartMenu
+			assignvaluestoboxes				
+					
+			begin
+				showboxes
+				@output.puts "\n"
+				displaychosenboxprompt				
+				userInput = @input.gets.chomp
+				
+				case boxvalid userInput
+					when 0
+					setchosenbox userInput.to_i
+					selectedboxes.push userInput.to_i 
+					break
+					else
+					clearScreen
+					displaychosenboxerror
+				end
+			end while true
+			
+			clearScreen
+			displaychosenbox
+			@output.puts "Press Enter to Continue."
+			@input.gets.chomp			
+			clearScreen			
+		end
+				
 		def showselectedbox guess
 			@selectedbox = @sequence[guess-1]
 			@output.puts "Selected box: |#{guess}| Amount: #{@sequence[guess-1]} \n"
 		end
 		
+		#--------------------------------Methods for tests---------------------------------------------------------
+	
+		def start			
+			@output.puts "Welcome to Deal or No Deal!"
+			@output.puts "Designed by: #{created_by}"
+			@output.puts "StudentID: #{student_id}"
+			@output.puts "Starting game..."
+		end
+		
+		def created_by
+			return "Artur Jaakman and Md Nazmus Sakib"
+		end
+		
+		def student_id
+			return "51773211 and 51773617"
+		end
+		
+		def displaymenu
+			@output.puts "Menu: (1) Play | (2) New | (3) Analysis | (9) Exit"			
+		end
 		def resetgame
 			@output.puts "New game..."
 			@sequence = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
@@ -202,15 +331,12 @@ module DOND_Game
 			@output.puts "Enter the number of the box you wish to open. Enter returns to menu."
 		end
 		
-		def openbox guess
-			
+		def openbox guess			
 			# based on the function argument find box in @openedboxes array and set it to 1.
 			# box = box number based on guess
 			# status = "Open" if 1 "Closed" if 0
-			@openedboxes[guess.to_i - 1] = 1
-			
-			@output.puts ("#{@openedboxes[guess.to_i - 1]} Status: Opened")
-			
+			@openedboxes[guess.to_i - 1] = 1			
+			@output.puts ("#{@openedboxes[guess.to_i - 1]} Status: Opened")			
 		end
 		
 		def bankerphoneswithvalue offer
@@ -243,8 +369,7 @@ module DOND_Game
 		end
 	
 		def incrementturn
-			@turn += 1
-			
+			@turn += 1			
 		end
 		
 		def getturnsleft
