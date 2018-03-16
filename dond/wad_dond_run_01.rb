@@ -88,7 +88,7 @@ end
 # Sinatra routes
 
 	# Any code added to web-based game should be added below.
-    
+
     
     
 	# Any code added to web-based game should be added above.
