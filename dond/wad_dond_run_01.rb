@@ -2,6 +2,23 @@
 
 # Add any additional gems and global variables here
 require 'sinatra'		
+require 'sinatra/activerecord'
+
+ ActiveRecord::Base.establish_connection(
+	  :adapter => 'sqlite3',
+	  :database => 'dond.db'
+	) 
+
+class User < ActiveRecord::Base
+	validates :username, presence: true, uniqueness: true
+	validates :password, presence: true
+	validates :isAdmin, presence: true
+	validates :gamesPlayed, presence: true
+	validates :totalWinnings, presence: true
+	validates :gamesWon, presence: true
+	validates :lastGameState, presence: true
+end
+
 
 # The file where you are to write code to pass the tests must be present in the same folder.
 # See http://rspec.codeschool.com/levels/1 for help about RSpec
@@ -71,9 +88,9 @@ end
 # Sinatra routes
 
 	# Any code added to web-based game should be added below.
-
-
-
+    
+    
+    
 	# Any code added to web-based game should be added above.
 
 # End program

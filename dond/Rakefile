@@ -1,0 +1,2 @@
+require "./wad_dond_run_01"
+require "sinatra/activerecord/rake"
