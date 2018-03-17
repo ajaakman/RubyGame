@@ -50,3 +50,9 @@
 17 03 2018 at 09:39PM	Admin	User Logged in with user id: Admin
 
 17 03 2018 at 09:39PM	Admin	User deleted test
+
+17 03 2018 at 10:59PM	Admin	User Logged in with user id: Admin
+
+17 03 2018 at 10:59PM		New user signed up with user id user
+
+17 03 2018 at 10:59PM	Admin	User Logged in with user id: Admin

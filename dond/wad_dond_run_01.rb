@@ -90,7 +90,6 @@ end
 
 	# Any code added to web-based game should be added below.
   
-<<<<<<< HEAD
 helpers do # Helpers used to validate user access level, 3 levels of access: visitor, user, admin. Set up by Artur Jaakman, with Nazmus Sakib providing debugging support.
  
 	def restricted! # Only admins.
@@ -146,57 +145,6 @@ def logDbChanges(event) # Method called with the event as parameter for Database
 	file.each do |line|	
 		currentText= currentText + line			
 	end
-=======
-  get '/' do
-   module DOND_Game
-     @input = STDIN
-     @output = STDOUT
-     g=Game.new(@input, @output)
-     playing = true
-     input = ""
-     menu = ""
-     guess = ""
-     box = 0
-     turn = 0
-     win = 0
-     deal = 0
-     $welcomeMsg= g.start
-     g.resetgame
-     $sequence=g.sequence
-     $amounts=g.amounts
-    end
-   erb :home
-  end
-    
-  def createBoxesView  #creates html strings to create buttons to open boxes
-   
-    boxHtml=""
-    for i in 1..22
-       
-       line1='<div class="closedBox" id="boxDiv'+i.to_s+'">'
-       line2='<input type="button" calss = "eachBox" onclick ="showBox('+i.to_s+')" value =" Open">  </input>'
-       line3='</div>'
-       if i==12
-        boxHtml+="<br><br><br>"+line1+line2+line3
-       else
-        boxHtml+=line1+line2+line3
-       end
-    end
-    return boxHtml
-  end
-
-  def showAmounts
-   
-    myAmounts=""
-    ($amounts.length/2).times do |i|
-           line="<br>"+"#{$amounts[i]}     #{$amounts[11+i]}"
-           myAmounts+=line
-    end   
-    return myAmounts
-  end
-  
-  
->>>>>>> 905a502b9245321cc20c1ec209338a37d1a1f467
     
 	timeStamp=Time.now.strftime("%d %m %Y at %I:%M%p") # Get current time stamp and format the time as string.
   
@@ -266,8 +214,37 @@ get '/' do
 		win = 0
 		deal = 0
 		$welcomeMsg= g.start
+		g.resetgame
+		$sequence=g.sequence
+		$amounts=g.amounts
 	end
 	erb :home
+end
+    
+  def createBoxesView  #creates html strings to create buttons to open boxes
+   
+    boxHtml=""
+    for i in 1..22
+       
+		line1='<div class="closedBox" id="boxDiv'+i.to_s+'">'
+		line2='<input type="button" calss = "eachBox" onclick ="showBox('+i.to_s+')" value =" Open">  </input>'
+		line3='</div>'
+		if i==12
+			boxHtml+="<br><br><br>"+line1+line2+line3
+		else
+			boxHtml+=line1+line2+line3
+		end
+    end
+    return boxHtml
+end
+
+def showAmounts   
+    myAmounts=""
+    ($amounts.length/2).times do |i|
+        line="<br>"+"#{$amounts[i]}     #{$amounts[11+i]}"
+        myAmounts+=line
+    end   
+    return myAmounts
 end
 
 get '/about' do	
