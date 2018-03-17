@@ -121,6 +121,15 @@ div.links {
     font-size: 110%;
 }
 
+div.closedBox { 
+    
+}
+
+
+
+
+
+
 /*Tables for Admin controls*/
 div.users, div.articles {
     margin: auto;
