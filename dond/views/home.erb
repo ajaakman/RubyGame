@@ -8,14 +8,30 @@
 		
 	<div class="game" id="gameDiv">
 		
-		<% $sequence.each each do |i|%>
 		<div class = "allBoxes" id="allBoxes">
-			<div id="boxDiv1">
-				<input type="button" calss = "eachBox" id="box1"><>
-			</div>
+			<p>
+				<%=createBoxesView%>
+			</p>	
 		</div>
 		
 		<div class="amounts" id="allAmounts">
 	    
 		</div>
 	</div>
+	
+	<div class="amounts" id="amountsDiv">
+		<%=showAmounts%>
+	<div>
+	
+	
+	
+	
+	
+	
+	
+<script>
+	function showBox(n)
+	{
+		document.getElementById("boxDiv"+n).innerHTML="100"
+	}
+</script>
