@@ -1,0 +1,142 @@
+/*CSS Primarily designed by Artur Jaakman, with much debugging aid from Nazmus Sakib*/
+body {
+    font-family: Garamond;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1200px;
+    background-color: #282E3A;
+}
+
+header {    
+    height: 100px;
+    padding-bottom: 50px;
+    width: 100%;
+    position: relative;
+    float: left;
+    color: #262F40;
+}
+
+footer {
+    padding-top: 20%;
+}
+
+a:link {
+    color: #282E3A;
+    font-weight: bold;
+}
+
+a:visited {
+    color: #282E3A;
+    font-weight: bold;
+}
+
+a:hover {
+    color: #6182F2;
+    font-weight: bold;
+}
+
+h1 {
+    height: 90%;
+    width: 90%;
+    margin: auto;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+h2 {
+    margin: auto;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+p {
+    margin: auto;
+    color: #262F40;
+    height: 90%;
+    width: 90%;
+    padding-top: 1%;
+    padding-right: 1%;
+    padding-bottom: 1%;
+    padding-left: 1%;
+}
+
+p1 {
+    color: #262F40;
+    font-size: 100%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+p2 {
+    color: #262F40;
+    font-size: 80%;
+}
+
+a {
+    text-decoration: none;
+}
+
+div.main_container {
+    margin: auto;
+    background-color: #BBB8CC;
+    width: 100%;
+    height: 100%; 
+}
+
+div.view_content {
+    min-height: 100%;
+}
+
+div.page_title {
+    text-align: center;
+    font-size: 120%;
+} 
+
+div.content {
+    margin: auto;
+    background-color: #DFDAF2;
+    height: 90%;
+    width: 90%;
+    float: center;
+    padding-top: 1%;
+    padding-right: 1%;
+    padding-bottom: 1%;
+    padding-left: 1%;
+}
+
+div.navbar {
+    margin: auto;
+    width: 90%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-right: 1%;
+    padding-left: 1%;    
+}
+
+div.links { 
+    width: 25%;
+    text-align: center;
+    background-color: #DFDAF2;
+    float: left;
+    font-size: 110%;
+}
+
+/*Tables for Admin controls*/
+div.users, div.articles {
+    margin: auto;
+    width: 90%;
+}
+
+div.user, div.article, div.table_header {
+    width: 100%;
+    position: relative;
+    float: left;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+div.table_cell {
+    position: relative;
+    float: left;
+    width: 12.5%;
+}

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <script src="/script.js"></script>
+
+    <meta charset="UTF-8" />
+
+	<meta name="viewport" content="width=device-width" />
+
+	<meta name="description" content="This is a deal or no deal game play site" />
+
+	<meta name="keywords" content="deal or no deal, game, play"/>
+
+	<link rel="stylesheet" href="/style.css" type="text/css" />
+
+	<title>Deal or No Deal</title>
+
+</head>
+
+
+<body>
+
+	<div  class="main_container">
+
+        <header>
+        
+            <div class="page_title">
+        
+                <h1>Deal or No Deal</h1><br>
+            
+            </div>
+            
+            <div class="navbar">
+        
+                <div class= "links">
+            
+                    <a href="/">Play</a>
+                
+                </div>
+                
+                <div class= "links">
+                    
+                    <a href="/about">About</a>
+                    
+                </div>
+                
+                <div class= "links">
+                    
+                <a href="/rankings">Leaderboard</a>
+                    
+                </div>
+                             
+                <div class= "links">                
+                                          
+                    <% if $credentials %>
+        
+                           <% if $credentials[0] != '' %>
+        
+                                <a href="/logout">Logout</a> <br> 
+        
+                                Logged in as <a href="/user/<%= $credentials[0] %>"><b><%= $credentials[0] %></b></a> <br> 
+        
+                                <% if $credentials[0] == "Admin" %>
+        
+                                    <a href="/admincontrols">Admin Controls</a>
+        
+                                <% end %>
+        
+                            <% else %>
+        
+                                <a href="/login">Login</a>
+        
+                            <% end %> 
+        
+                        <% else %>
+        
+                           <a href="/login">Login</a>
+        
+                        <% end %> 
+                </div>
+            
+            </div> 
+            
+        </header>
+        
+                    
+            <div class="view_content"> 
+            
+                <%= yield %>     
+            
+            </div> 
+        
+        
+            <footer>
+                
+                <p>Created by Artur Jaakman and Md Nazmus Sakib 2018.</p>
+                
+            </footer>
+        
+        
+    </div>
+
+</body>
+</html>

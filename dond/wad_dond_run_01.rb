@@ -29,6 +29,7 @@ module DOND_Game
 	@input = STDIN
 	@output = STDOUT
 	g = Game.new(@input, @output)
+	@g=Game.new(@input, @output)
 	playing = true
 	input = ""
 	menu = ""
@@ -88,7 +89,24 @@ end
 # Sinatra routes
 
 	# Any code added to web-based game should be added below.
-
+  
+  get '/' do
+   module DOND_Game
+     @input = STDIN
+     @output = STDOUT
+     g=Game.new(@input, @output)
+     playing = true
+     input = ""
+     menu = ""
+     guess = ""
+     box = 0
+     turn = 0
+     win = 0
+     deal = 0
+     $welcomeMsg= g.start
+    end
+   erb :home
+  end
     
     
 	# Any code added to web-based game should be added above.

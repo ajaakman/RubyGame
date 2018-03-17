@@ -200,6 +200,8 @@ module DOND_Game
 			@output.puts "Designed by: #{created_by}"
 			@output.puts "StudentID: #{student_id}"
 			@output.puts "Starting game..."
+			
+			return "Welcome to Deal or No Deal!" + "<br>Designed by: #{created_by}" + "<br>StudentID: #{student_id}" 
 		end
 		
 		def created_by
@@ -291,6 +293,7 @@ module DOND_Game
 		
 		def displaychosenboxprompt			
 			@output.puts "Enter the number of the box you wish to keep."
+			return "Enter the number of the box you wish to keep."
 		end
 				
 		def displaychosenboxerror
@@ -341,6 +344,7 @@ module DOND_Game
 		
 		def bankerphoneswithvalue offer
 			@output.puts "Banker offers you for your chosen box: #{offer}"
+			return "Banker offers you for your chosen box: #{offer}"
 		end
 		
 		def bankercalcsvalue value			
