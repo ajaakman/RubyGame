@@ -1,0 +1,52 @@
+
+17 03 2018 at 09:04PM	Admin	User Logged in with user id: Admin
+
+17 03 2018 at 09:05PM		New user signed up with user id test
+
+17 03 2018 at 09:05PM		New user signed up with user id test2
+
+17 03 2018 at 09:05PM		Logging attempt failed: test
+
+17 03 2018 at 09:05PM		Logging attempt failed: test
+
+17 03 2018 at 09:05PM	Admin	User Logged in with user id: Admin
+
+17 03 2018 at 09:08PM	Unknow	New user signed up with user id test
+
+17 03 2018 at 09:09PM		Logging attempt failed: test
+
+17 03 2018 at 09:09PM		New user signed up with user id test2
+
+17 03 2018 at 09:09PM	Admin	User Logged in with user id: Admin
+
+17 03 2018 at 09:22PM		Logging attempt failed: test
+
+17 03 2018 at 09:22PM		New user signed up with user id test
+
+17 03 2018 at 09:23PM	Unknow	New user signed up with user id test
+
+17 03 2018 at 09:29PM	Unknow	New user signed up with user id test
+
+17 03 2018 at 09:29PM	test	User Logged in with user id: test
+
+17 03 2018 at 09:29PM	Admin	User Logged in with user id: Admin
+
+17 03 2018 at 09:31PM	Admin	User promoted to admin with user id: User
+
+17 03 2018 at 09:31PM	Admin	User promoted to admin with user id: Moderator
+
+17 03 2018 at 09:31PM	Admin	User promoted to admin with user id: Moderator
+
+17 03 2018 at 09:31PM	Admin	User deleted test
+
+17 03 2018 at 09:32PM	Admin	User deleted test
+
+17 03 2018 at 09:33PM	Admin	User deleted test
+
+17 03 2018 at 09:33PM	User	User Logged in with user id: User
+
+17 03 2018 at 09:33PM	Moderator	User Logged in with user id: Moderator
+
+17 03 2018 at 09:39PM	Admin	User Logged in with user id: Admin
+
+17 03 2018 at 09:39PM	Admin	User deleted test

@@ -12,7 +12,7 @@ require 'sinatra/activerecord'
 class User < ActiveRecord::Base
 	validates :username, presence: true, uniqueness: true
 	validates :password, presence: true
-	validates :isAdmin, presence: true
+	#validates :isAdmin, presence: true
 	validates :gamesPlayed, presence: true
 	validates :totalWinnings, presence: true
 	validates :gamesWon, presence: true
@@ -90,25 +90,239 @@ end
 
 	# Any code added to web-based game should be added below.
   
-  get '/' do
-   module DOND_Game
-     @input = STDIN
-     @output = STDOUT
-     g=Game.new(@input, @output)
-     playing = true
-     input = ""
-     menu = ""
-     guess = ""
-     box = 0
-     turn = 0
-     win = 0
-     deal = 0
-     $welcomeMsg= g.start
+helpers do # Helpers used to validate user access level, 3 levels of access: visitor, user, admin. Set up by Artur Jaakman, with Nazmus Sakib providing debugging support.
+ 
+	def restricted! # Only admins.
+		if authorizedadmin?
+			return
+		end
+	   redirect '/denied'
+	end
+	
+	def authorizedadmin?
+		if $credentials != nil
+		 @Userz = User.where(:username => $credentials[0]).to_a.first      
+			if @Userz          
+				if @Userz.username == "Admin"          
+					return true          
+				else              
+					return false         
+				end          
+			else          
+				return false      
+			end       
+		end   
+	end
+	  
+	def registered! # Only Logged In users.
+		if authorizeduser?
+			return
+		end
+		redirect '/pleaselogin'
+	end
+	
+	def authorizeduser?
+		if $credentials != nil
+		@Userz = User.where(:username => $credentials[0]).to_a.first      
+			if @Userz          
+				if @Userz.username != ""          
+				   return true          
+				else              
+				   return false         
+				end          
+			else          
+				return false      
+			end       
+		end   
+	end
+end
+
+
+def logDbChanges(event) # Method called with the event as parameter for Database Log. Written by Nazmus Sakib.
+
+	file = File.open("log.txt")  # Read the log text file and get current content.
+	currentText="";
+	file.each do |line|	
+		currentText= currentText + line			
+	end
+    
+	timeStamp=Time.now.strftime("%d %m %Y at %I:%M%p") # Get current time stamp and format the time as string.
+  
+	user="Unknow"
+  
+	if $credentials!=nil       # If the user is not logged in, keep the user as unknow otherwise get the user id.
+		user=$credentials[0]    
+	end
+ 
+	newText=timeStamp+"\t"+user+"\t"+event    # Concateate existing text and new text to be logged.
+	logText=currentText+"\n"+newText
+	
+	file = File.open("log.txt", "w")  # Write to file.
+	file.puts logText
+	file.close	
+end
+
+post '/reset' do # Admin control for resetting database. Made by Artur Jaakman.
+ 
+	restricted!
+	
+	$credentials = ['','']	
+	User.delete_all
+	User.create(username: "Admin", password: "admin", isAdmin: true, gamesPlayed: 0, totalWinnings: 0.0, gamesWon: 0, lastGameState: "-") # Creating an Admin account.
+	redirect "/"
+	 
+	event="Datebase Reset"
+	logDbChanges(event)  
+end
+
+post '/login' do # Login feature, set up by Artur Jaakman.
+	$credentials = [params[:username],params[:password]]
+ 
+	@Users = User.where(:username => $credentials[0]).to_a.first
+ 
+	if @Users
+
+    if @Users.password == $credentials[1]
+          event="User Logged in with user id: "+ params[:username]
+          logDbChanges(event);  
+          redirect '/'  
+    else  
+          $credentials = ['','']
+          event="Logging attempt failed: "+ params[:username]
+          logDbChanges(event);
+          redirect '/wrongaccount'
     end
-   erb :home
-  end
-    
-    
+    else
+        $credentials = ['','']
+        event="Logging attempt failed: "+ params[:username]
+        logDbChanges(event);
+        redirect '/wrongaccount'
+	end
+end
+  
+get '/' do
+	module DOND_Game
+		@input = STDIN
+		@output = STDOUT
+		g=Game.new(@input, @output)
+		playing = true
+		input = ""
+		menu = ""
+		guess = ""
+		box = 0
+		turn = 0
+		win = 0
+		deal = 0
+		$welcomeMsg= g.start
+	end
+	erb :home
+end
+
+get '/about' do	
+	erb :about	
+end
+
+get '/login' do
+	erb :login 
+end
+
+get '/rankings' do
+	@list4 = User.all.sort_by { |u| [-u.totalWinnings] } # Sorting list of users by points. Made by Artur Jaakman and Nazmus Sakib.
+	erb :rankings
+end
+
+get '/createaccount' do
+   erb :createaccount
+end
+
+post '/createaccount' do # Create Account. Set up by Artur Jaakman
+	n = User.new    
+	n.username = params[:username] 
+	n.password = params[:password]   
+	n.isAdmin = false 	
+	n.gamesPlayed = 0
+	n.totalWinnings = 0.0
+	n.gamesWon = 0
+	n.lastGameState = "-"
+	if n.username == "Admin" and n.password == "Password"	
+		n.isAdmin = true 
+	end
+	n.save    
+	event="New user signed up with user id "+params[:username]
+	logDbChanges(event)
+	redirect "/"
+end
+
+get '/logout' do
+	$credentials = ['','']
+	redirect '/'
+end
+
+get '/wrongaccount' do
+	erb :wrongaccount
+end
+
+get '/admincontrols' do
+	restricted!
+	erb :admincontrols
+end
+
+get '/userlist' do # Creating user list made by Artur Jaakman.
+	restricted!
+	@list2 = User.all.sort_by { |u| [u.id] }   
+	erb :userlist
+end
+
+get '/noaccount' do
+	erb :noaccount
+end
+
+get '/denied' do  
+	erb :denied 
+end
+
+get '/user/:uzer' do 
+	erb :profile
+end
+
+get '/pleaselogin' do  
+	erb :pleaselogin
+end
+
+get '/notfound' do
+	erb :notfound 
+end
+
+put '/user/:uzer' do # Admin can promote Users to Admin. Created by Artur Jaakman.
+	restricted! 
+	n = User.where(:username => params[:uzer]).to_a.first
+	n.isAdmin = params[:isAdmin] ? 1 : 0  
+	n.save   
+	event="User promoted to admin with user id: "+params[:uzer]
+	logDbChanges(event) 
+	redirect '/userlist'
+end
+
+get '/user/delete/:uzer' do # Deleting user. Made by Artur Jaakman, debugging aid provided by Nazmus Sakib.
+	restricted!
+	n = User.where(:username => params[:uzer]).to_a.first
+	if n.isAdmin == false
+		erb :denied 
+	else
+		n.destroy          
+		@list2 = User.all.sort_by { |u| [u.id] }      
+		redirect '/userlist'
+	end  
+	event = "User deleted "+params[:uzer]
+	logDbChanges(event)  
+	redirect '/userlist'
+end
+
+not_found do # Redirect if directory does not exist.
+	status 404	
+	redirect '/notfound'
+end
+
 	# Any code added to web-based game should be added above.
 
 # End program

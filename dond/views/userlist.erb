@@ -13,9 +13,9 @@
         
         <div class="table_cell">Last Edit</div>
     
-        <div class="table_cell">Moderator</div>
+        <div class="table_cell">Admin</div>
         
-        <div class="table_cell">Points</div>
+        <div class="table_cell">Games Played</div>
         
         <div class="table_cell">Promote</div>
     
@@ -35,19 +35,19 @@
             
             <div class="table_cell"><%= liste.updated_at %></div>
     
-            <div class="table_cell"><%= liste.moderator %></div>
+            <div class="table_cell"><%= liste.isAdmin %></div>
             
-            <div class="table_cell"><%= liste.points %></div>
+            <div class="table_cell"><%= liste.gamesPlayed %></div>
     
             <% if liste.username != "Admin" %>
     
-            <form action="/user/<%= liste.username %>" method="post" id="moderator">
+            <form action="/user/<%= liste.username %>" method="post" id="isAdmin">
     
                 <input type="hidden" name="_method" value="put">
     
-                <div class="table_cell"><input type="checkbox" name="moderator" <%= "checked" if liste.moderator %>>   
+                <div class="table_cell"><input type="checkbox" name="isAdmin" <%= "checked" if liste.isAdmin %>>   
     
-                <input type="submit" value="Moderator"></div>
+                <input type="submit" value="Update"></div>
     
             </form> 
     
