@@ -229,35 +229,34 @@ end
    
   def showStartButtons
 	  if $credentials == nil #user is not logged in
-		html='<form action="/newgame method="post" id="new_game">'		
-		html+='<input type="submit" class= "start_button" value="Start"></input>'
+		html='<form action= "/newgame" method= "post" id= "new_game">'		
+		html+='<input type= "submit" class= "start_button" value= "Start"></input>'
 		html+='</form>'
 	  else
       @Users = User.where(:username => $credentials[0]).to_a.first 
       if(@Users.lastGameState=="-")  #user doesn't have a saved game
-         html='<form action="/newgame method="post" id="new_game">'
-         html=+'<input type="hidden" name="_method" value="put">'
-         html+='<input type="submit" class= "start_button" value="Start"></input>'
+         html='<form action="/newgame" method="post" id="new_game">'
+         #html=+'<input type="hidden" name="_method" value="put">'
+         html+='<input type= "submit" class= "start_button" value= "Start"></input>'
          html+='</form>' 
       else
-         html='<input type="submit" class= "start_button" value="Start"></input>'+'<input type="button" value="Resume"></input>'
+         html='<input type= "submit" class= "start_button" value= "Start"></input>'+'<input type= "button" value= "Resume"></input>'
       end 		
 	  end
 	  return html
   end
- 
-	get '/play/:id' do # Edit article page. Creates a new create page and loads parameters from old article. Made my Nazmus Sakib. 
-	  
-	  @session = Session.order("created_at").last
-	  erb :play#,  :locals => { :myheading =>  @article.heading, :mycontent=> @article.content} 
-	end
-   
-   
-	post "/newgame" do
+  
+	post '/newgame' do
 		Session.create(user: "Guest", sequence: "", selectedboxes: "", amounts: "", chosenbox: 0, selectedbox: 0)
-		@session = Session.order("created_at").last		
+		@session = Session.order("created_at").last
+	    erb :play,  :locals => { :id =>  @session.id, :user=> @session.user} 
 	end
-    
+ 
+	#get '/play/:id' do # Edit article page. Creates a new create page and loads parameters from old article. Made my Nazmus Sakib. 
+	#  
+	#  #@session = Session.order("created_at").last
+	#end   
+       
   #def showboxes
   #   if $flag=="Game Started"
   #      #show boxes to choose to keep
