@@ -20,6 +20,16 @@ class User < ActiveRecord::Base
 end
 
 
+class Session < ActiveRecord::Base
+# validates :user, presence: true
+#	validates :sequence,
+#	validates :selectedboxes, presence: true
+#	validates :openedboxes, presence: true
+#	validates :amounts, presence: true
+#	validates :chosenbox, presence: true
+#	validates :selectedbox, presence: true
+end
+
 # The file where you are to write code to pass the tests must be present in the same folder.
 # See http://rspec.codeschool.com/levels/1 for help about RSpec
 require "#{File.dirname(__FILE__)}/wad_dond_gen_01"
@@ -205,72 +215,92 @@ get '/' do
 		@input = STDIN
 		@output = STDOUT
 		g=Game.new(@input, @output)
-		playing = true
-		input = ""
-		menu = ""
-		guess = ""
-		box = 0
-		turn = 0
-		win = 0
-		deal = 0
 		$welcomeMsg= g.start
-		g.resetgame
-		$sequence=g.sequence
-		$amounts=g.amounts
-		$selectedboxes = g.selectedboxes
+		
+		#$sequence=g.sequence
+		#$amounts=g.amounts
+		#$selectedboxes = g.selectedboxes
+		#$chosenbox=g.chosenbox
+		
 	end
 	erb :home
 end
    
    
   def showStartButtons
-	  if $selectedboxes.length>0 # game is already in progress do not show start buttons
-		return ""
-	  end
-	   
 	  if $credentials == nil #user is not logged in
-		html='<input type="button" calss= "start_button" value="Start New Game as Guest"></input>'
+     html='<input type="button" calss= "start_button" value="Start New Game as Guest"></input>'
+     Session.create(user: "Guest", sequence: "", selectedboxes: "", amounts: "", chosenbox: 0, selectedbox: 0)
+     session=Session.order("created_at").last
+     redirect "play/#{session}"
 	  else
-		@Users = User.where(:username => $credentials[0]).to_a.first 
- 		if(@Users.lastGameState=="-")  #user doesn't have a saved game
-		  html='<form action="/newgame method="post" id="new_game">'
-		  html=+'<input type="hidden" name="_method" value="put">'
-		  html+='<input type="submit" calss= "start_button" value="Start"></input>'
-          html+='</form>' 
-		else
-		  html='<input type="submit" calss= "start_button" value="Start"></input>'+'<input type="button" value="Resume"></input>'
-		end 		
+      @Users = User.where(:username => $credentials[0]).to_a.first 
+      if(@Users.lastGameState=="-")  #user doesn't have a saved game
+         html='<form action="/newgame method="post" id="new_game">'
+         html=+'<input type="hidden" name="_method" value="put">'
+         html+='<input type="submit" calss= "start_button" value="Start"></input>'
+         html+='</form>' 
+      else
+         html='<input type="submit" class= "start_button" value="Start"></input>'+'<input type="button" value="Resume"></input>'
+      end 		
 	  end
 	  return html
   end
  
    
+   #post "/newgame" do
+   #  $flag="Game Started"
+   #  redirect "/"
+   #end
     
-  def createBoxesView  #creates html strings to create buttons to open boxes
-   
-    boxHtml=""
-    for i in 1..22
-       
-		line1='<div class="closedBox" id="boxDiv'+i.to_s+'">'
-		line2='<input type="button" calss = "eachBox" onclick ="showBox('+i.to_s+')" value =" Open">  </input>'
-		line3='</div>'
-		if i==12
-			boxHtml+="<br><br><br>"+line1+line2+line3
-		else
-			boxHtml+=line1+line2+line3
-		end
-    end
-    return boxHtml
-end
+  #def showboxes
+  #   if $flag=="Game Started"
+  #      #show boxes to choose to keep
+  #      boxHtml=""
+  #      for i in 1..22
+  #        line1='<input type="button" value ="Choose">  </input>'
+  #        boxHtml+=line1
+  #      end
+  #      $flag=""
+  #   else
+  #      #show boxes to reveal amount
+  #      boxHtml=""
+  #      for i in 1..22
+  #        line1='<input type="button" value ="Open">  </input>'
+  #        boxHtml+=line1
+  #      end
+  #      
+  #   end
+  #   return boxHtml
+  # end
+    
+    
+    
+#  def createBoxesView  #creates html strings to create buttons to open boxes
+#   
+#    boxHtml=""
+#    for i in 1..22
+#       
+#		line1='<div class="closedBox" id="boxDiv'+i.to_s+'">'
+#		line2='<input type="button" class = "eachBox" onclick ="showBox('+i.to_s+')" value =" Open">  </input>'
+#		line3='</div>'
+#		if i==12
+#			boxHtml+="<br><br><br>"+line1+line2+line3
+#		else
+#			boxHtml+=line1+line2+line3
+#		end
+#    end
+#    return boxHtml
+#end
 
-def showAmounts   
-    myAmounts=""
-    ($amounts.length/2).times do |i|
-        line="<br>"+"#{$amounts[i]}     #{$amounts[11+i]}"
-        myAmounts+=line
-    end   
-    return myAmounts
-end
+#def showAmounts   
+#    myAmounts=""
+#    ($amounts.length/2).times do |i|
+#        line="<br>"+"#{$amounts[i]}     #{$amounts[11+i]}"
+#        myAmounts+=line
+#    end   
+#    return myAmounts
+#end
 
 get '/about' do	
 	erb :about	
