@@ -217,13 +217,14 @@ get '/' do
 		g.resetgame
 		$sequence=g.sequence
 		$amounts=g.amounts
+		$selectedboxes = g.selectedboxes
 	end
 	erb :home
 end
    
    
   def showStartButtons
-	  if selectedboxes.length>0 # game is already in progress do not show start buttons
+	  if $selectedboxes.length>0 # game is already in progress do not show start buttons
 		return ""
 	  end
 	   
