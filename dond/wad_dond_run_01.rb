@@ -229,16 +229,15 @@ end
    
   def showStartButtons
 	  if $credentials == nil #user is not logged in
-     html='<input type="button" calss= "start_button" value="Start New Game as Guest"></input>'
-     Session.create(user: "Guest", sequence: "", selectedboxes: "", amounts: "", chosenbox: 0, selectedbox: 0)
-     session=Session.order("created_at").last
-     redirect "play/#{session}"
+		html='<form action="/newgame method="post" id="new_game">'		
+		html+='<input type="submit" class= "start_button" value="Start"></input>'
+		html+='</form>'
 	  else
       @Users = User.where(:username => $credentials[0]).to_a.first 
       if(@Users.lastGameState=="-")  #user doesn't have a saved game
          html='<form action="/newgame method="post" id="new_game">'
          html=+'<input type="hidden" name="_method" value="put">'
-         html+='<input type="submit" calss= "start_button" value="Start"></input>'
+         html+='<input type="submit" class= "start_button" value="Start"></input>'
          html+='</form>' 
       else
          html='<input type="submit" class= "start_button" value="Start"></input>'+'<input type="button" value="Resume"></input>'
@@ -247,11 +246,17 @@ end
 	  return html
   end
  
+	get '/play/:id' do # Edit article page. Creates a new create page and loads parameters from old article. Made my Nazmus Sakib. 
+	  
+	  @session = Session.order("created_at").last
+	  erb :play#,  :locals => { :myheading =>  @article.heading, :mycontent=> @article.content} 
+	end
    
-   #post "/newgame" do
-   #  $flag="Game Started"
-   #  redirect "/"
-   #end
+   
+	post "/newgame" do
+		Session.create(user: "Guest", sequence: "", selectedboxes: "", amounts: "", chosenbox: 0, selectedbox: 0)
+		@session = Session.order("created_at").last		
+	end
     
   #def showboxes
   #   if $flag=="Game Started"
