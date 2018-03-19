@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
 	validates :gamesPlayed, presence: true
 	validates :totalWinnings, presence: true
 	validates :gamesWon, presence: true
-	validates :lastGameState, presence: true
+	validates :lastGameSession, presence: true
 end
 
 
@@ -178,7 +178,7 @@ post '/reset' do # Admin control for resetting database. Made by Artur Jaakman.
 	
 	$credentials = ['','']	
 	User.delete_all
-	User.create(username: "Admin", password: "admin", isAdmin: true, gamesPlayed: 0, totalWinnings: 0.0, gamesWon: 0, lastGameState: "-") # Creating an Admin account.
+	User.create(username: "Admin", password: "admin", isAdmin: true, gamesPlayed: 0, totalWinnings: 0.0, gamesWon: 0, lastGameSession: 0) # Creating an Admin account.
 	redirect "/"
 	 
 	event="Datebase Reset"
@@ -229,28 +229,54 @@ end
    
   def showStartButtons
 	  if $credentials == nil #user is not logged in
-		html='<form action= "/newgame" method= "post" id= "new_game">'		
-		html+='<input type= "submit" class= "start_button" value= "Start"></input>'
-		html+='</form>'
+      html='<form action= "/newgame" method= "post" id= "new_game">'		
+      html+='<input type= "submit" class= "start_button" value= "Start"></input>'
+      html+='</form>'
 	  else
       @Users = User.where(:username => $credentials[0]).to_a.first 
-      if(@Users.lastGameState=="-")  #user doesn't have a saved game
+      if(@Users.lastGameSession==0)  #user doesn't have a saved game
          html='<form action="/newgame" method="post" id="new_game">'
          #html=+'<input type="hidden" name="_method" value="put">'
          html+='<input type= "submit" class= "start_button" value= "Start"></input>'
          html+='</form>' 
       else
-         html='<input type= "submit" class= "start_button" value= "Start"></input>'+'<input type= "button" value= "Resume"></input>'
+         html='<form action="/newgame" method="post" id="new_game">'
+         html+='<input type= "submit" class= "start_button" value= "Start"></input>'
+         html+='</form>'
+
+         html+='<form action="/resumegame" method="post" id="new_game">'
+         html+='<input type= "submit" class= "start_button" value= "Resume"></input>'
+         html+='</form>'
       end 		
 	  end
 	  return html
   end
   
 	post '/newgame' do
-		Session.create(user: "Guest", sequence: "", selectedboxes: "", amounts: "", chosenbox: 0, selectedbox: 0)
-		@session = Session.order("created_at").last
-	    erb :play,  :locals => { :id =>  @session.id, :user=> @session.user} 
+  if $credentials==nil
+     myuser="Guest"
+   		Session.create(user: myuser, sequence: "", selectedboxes: "", amounts: "", chosenbox: 0, selectedbox: 0)
+  else
+     myuser=$credentials[0]
+   		Session.create(user: myuser, sequence: "", selectedboxes: "", amounts: "", chosenbox: 0, selectedbox: 0)
+
+     @Users = User.where(:username => $credentials[0]).to_a.first
+     id=Session.order("created_at").last.id
+     @Users.lastGameSession= id
+     @Users.save
+  end
+    @session = Session.order("created_at").last 
+	   erb :play,  :locals => { :id =>  @session.id, :user=> @session.user} 
 	end
+ 
+ post '/resumegame' do
+  puts "resumed"
+  @Users=User.where(:username => $credentials[0]).to_a.first
+  myLastGameSession=@Users.lastGameSession
+  @session=Session.where(:id => myLastGameSession).to_a.first
+  
+  erb :play,  :locals => { :id =>  @session.id, :user=> @session.user} 
+ end
  
 	#get '/play/:id' do # Edit article page. Creates a new create page and loads parameters from old article. Made my Nazmus Sakib. 
 	#  
@@ -331,7 +357,7 @@ post '/createaccount' do # Create Account. Set up by Artur Jaakman
 	n.gamesPlayed = 0
 	n.totalWinnings = 0.0
 	n.gamesWon = 0
-	n.lastGameState = "-"
+	n.lastGameSession = 0
 	if n.username == "Admin" and n.password == "Password"	
 		n.isAdmin = true 
 	end

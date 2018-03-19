@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20180319174327) do
     t.integer "gamesPlayed"
     t.float "totalWinnings"
     t.integer "gamesWon"
-    t.string "lastGameState"
+    t.integer "lastGameSession"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
