@@ -217,11 +217,11 @@ get '/' do
 		g.resetgame
 		$sequence=g.sequence
 		$amounts=g.amounts
+		$selectedboxes=g.selectedboxes
 	end
 	erb :home
 end
-   
-   
+  
   def showStartButtons
 	  if selectedboxes.length>0 # game is already in progress do not show start buttons
 		return ""
@@ -232,18 +232,18 @@ end
 	  else
 		@Users = User.where(:username => $credentials[0]).to_a.first 
  		if(@Users.lastGameState=="-")  #user doesn't have a saved game
-		  html='<form action="/newgame method="post" id="new_game">'
-		  html=+'<input type="hidden" name="_method" value="put">'
-		  html+='<input type="submit" calss= "start_button" value="Start"></input>'
-          html+='</form>' 
+		  html='<input type="submit" calss= "start_button" value="Start"></input>'  
 		else
 		  html='<input type="submit" calss= "start_button" value="Start"></input>'+'<input type="button" value="Resume"></input>'
 		end 		
 	  end
 	  return html
   end
- 
-   
+  
+  
+  
+  
+  
     
   def createBoxesView  #creates html strings to create buttons to open boxes
    
@@ -260,7 +260,7 @@ end
 		end
     end
     return boxHtml
-end
+  end
 
 def showAmounts   
     myAmounts=""

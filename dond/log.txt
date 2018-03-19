@@ -56,3 +56,31 @@
 17 03 2018 at 10:59PM		New user signed up with user id user
 
 17 03 2018 at 10:59PM	Admin	User Logged in with user id: Admin
+
+17 03 2018 at 11:19PM	Admin	User Logged in with user id: Admin
+
+17 03 2018 at 11:19PM	Admin	User deleted user
+
+17 03 2018 at 11:19PM	Admin	User deleted user
+
+17 03 2018 at 11:19PM	Admin	User deleted user
+
+17 03 2018 at 11:19PM	Admin	User promoted to admin with user id: user
+
+17 03 2018 at 11:19PM	Admin	User promoted to admin with user id: user
+
+17 03 2018 at 11:19PM	Admin	User deleted user
+
+17 03 2018 at 11:19PM	Admin	User deleted user
+
+19 03 2018 at 10:37AM		Logging attempt failed: admin
+
+19 03 2018 at 10:38AM		Logging attempt failed: admin
+
+19 03 2018 at 10:42AM		Logging attempt failed: User
+
+19 03 2018 at 10:42AM	Admin	User Logged in with user id: Admin
+
+19 03 2018 at 11:06AM		Logging attempt failed: User
+
+19 03 2018 at 11:06AM	Admin	User Logged in with user id: Admin

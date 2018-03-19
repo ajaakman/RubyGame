@@ -5,33 +5,11 @@
 	<p>
 		<%=$welcomeMsg%>
     <p>
+	
+	<%=showStartButtons%>
 		
 	<div class="game" id="gameDiv">
-		
-		<div class = "allBoxes" id="allBoxes">
-			<p>
-				<%=createBoxesView%>
-			</p>	
-		</div>
-		
-		<div class="amounts" id="allAmounts">
+
 	    
-		</div>
 	</div>
 	
-	<div class="amounts" id="amountsDiv">
-		<%=showAmounts%>
-	<div>
-	
-	
-	
-	
-	
-	
-	
-<script>
-	function showBox(n)
-	{
-		document.getElementById("boxDiv"+n).innerHTML="100"
-	}
-</script>
