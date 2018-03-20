@@ -99,6 +99,10 @@ end
 # Sinatra routes
 
 	# Any code added to web-based game should be added below.
+
+def test
+	puts "test"
+end
   
 helpers do # Helpers used to validate user access level, 3 levels of access: visitor, user, admin. Set up by Artur Jaakman, with Nazmus Sakib providing debugging support.
  
@@ -210,19 +214,7 @@ post '/login' do # Login feature, set up by Artur Jaakman.
 	end
 end
   
-get '/' do
-	module DOND_Game
-		@input = STDIN
-		@output = STDOUT
-		g=Game.new(@input, @output)
-		$welcomeMsg= g.start
-		
-		#$sequence=g.sequence
-		#$amounts=g.amounts
-		#$selectedboxes = g.selectedboxes
-		#$chosenbox=g.chosenbox
-		
-	end
+get '/' do	
 	erb :home
 end
    
@@ -252,13 +244,16 @@ end
 	  return html
   end
   
-	post '/newgame' do
+post '/newgame' do
+	myvalues = "0.01,0.10,0.50,1.00,5.00,10.00,50.00,100.00,250.00,500.00,750.00,1000.00,3000.00,5000.00,10000.00,15000.00,20000.00,35000.00,50000.00,75000.00,100000.00,250000.00"
+	mysequence = (myvalues.split(",").shuffle!).join(",")
+	
   if $credentials==nil
      myuser="Guest"
-   		Session.create(user: myuser, sequence: "", selectedboxes: "", amounts: "", chosenbox: 0, selectedbox: 0)
+   		Session.create(user: myuser, sequence: mysequence, selectedboxes: "", amounts: myvalues, chosenbox: 0, selectedbox: 0)
   else
      myuser=$credentials[0]
-   		Session.create(user: myuser, sequence: "", selectedboxes: "", amounts: "", chosenbox: 0, selectedbox: 0)
+   		Session.create(user: myuser, sequence: mysequence, selectedboxes: "", amounts: myvalues, chosenbox: 0, selectedbox: 0)
 
      @Users = User.where(:username => $credentials[0]).to_a.first
      id=Session.order("created_at").last.id
@@ -266,16 +261,16 @@ end
      @Users.save
   end
     @session = Session.order("created_at").last 
-	   erb :play,  :locals => { :id =>  @session.id, :user=> @session.user} 
+	   erb :play,  :locals => { :session =>  @session} 
 	end
  
  post '/resumegame' do
-  puts "resumed"
-  @Users=User.where(:username => $credentials[0]).to_a.first
-  myLastGameSession=@Users.lastGameSession
-  @session=Session.where(:id => myLastGameSession).to_a.first
-  
-  erb :play,  :locals => { :id =>  @session.id, :user=> @session.user} 
+	puts "resumed"
+	@Users=User.where(:username => $credentials[0]).to_a.first
+	myLastGameSession=@Users.lastGameSession
+	@session=Session.where(:id => myLastGameSession).to_a.first
+	
+	erb :play,  :locals => { :session =>  @session} 
  end
  
 	#get '/play/:id' do # Edit article page. Creates a new create page and loads parameters from old article. Made my Nazmus Sakib. 

@@ -1,7 +1,17 @@
+<% user = session.user %><br>
+<% sequence = session.sequence.split(",") %><br>
+<% selectedboxes = session.selectedboxes.split(",") %><br>
+<% amounts = session.amounts.split(",") %><br>
+<% chosenbox = session.chosenbox %><br>
+<% selectedbox = session.selectedbox %><br>
 
-<h1> Game </h1>
+<% case selectedboxes.length %>
+<% when 0 %> 
+	  <p>Choose the box you want to keep.</p>
+	  stage = select box
+	  reload page
+<% when 21 %>
+	  
+<% else %>
 
-<p>New Game</p>
-
-<p><h1 rows="1" col="90"><%= id%></h1></p>
-<p><h1 rows="1" col="90"><%= user%></h1></p>
+<% end %>	
