@@ -1,6 +1,6 @@
 <% user = session.user %><br>
-<%=sequence = session.sequence.split(",") %><br>
-<% selectedboxes = session.selectedboxes.split(",") %><br>
+<% sequence = session.sequence.split(",") %><br>
+<%=selectedboxes = session.selectedboxes.split(",") %><br>
 <% amounts = session.amounts.split(",") %><br>
 <% chosenbox = session.chosenbox %><br>
 <% selectedbox = session.selectedbox %><br>
@@ -20,14 +20,33 @@
 	  </form>
 	  
 <% when 21 %>
-	  Congratulations you accepted offer and won: <%=offer%>
-	  <br>You could have won <b><%=sequence[chosenbox-1]%></b> if you continued playing.
-	  <% if offer.to_f >= sequence[chosenbox-1].to_f%>
-			<br> You won!!
+	  <% if selectedboxes.count("1") == 21 %>
+
+			Congratulations you accepted offer and won: <%=offer%>
+			<br>You could have won <b><%=sequence[chosenbox-1]%></b> if you continued playing.
+			<% if offer.to_f >= sequence[chosenbox-1].to_f%>
+				  <br> You won!!
+			<% else %>
+				 <br> Bad luck, you lost!
+			<%end%>
 	  <% else %>
-	       <br> Bad luck, you lost!
-      <%end%>
-	  
+			Congratulations you opened your box and won: <%=sequence[chosenbox-1]%>
+			<br>You could have won <b><%=offer%></b> if you accepted the bankers last offer.
+			<% if offer.to_f <= sequence[chosenbox-1].to_f%>
+				  <br> You won!!
+			<% else %>
+				 <br> Bad luck, you lost!
+			<%end%>
+			<% if user != "Guest" %>
+				  <% @user = User.where(:username => $credentials[0]).to_a.first %>
+				  <% @user.gamesPlayed = @user.gamesPlayed+1 %>
+				  <% @user.totalWinnings = @user.totalWinnings + sequence[chosenbox-1].to_f %>
+				  <% if offer.to_f <= sequence[chosenbox-1].to_f %>
+						<% @user.gamesWon+=1 %>
+				  <% end %>
+				  <% @user.save %>
+			<% end %>
+	  <% end %>
 <% else %>
       <%if selectedboxes.length>1%>
 			<br>You opened box <%=selectedbox%> containing amount <%=sequence[selectedbox-1]%>
