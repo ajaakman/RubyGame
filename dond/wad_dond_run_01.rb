@@ -273,6 +273,31 @@ post '/newgame' do
 	erb :play,  :locals => { :session =>  @session} 
  end
  
+ 
+ 
+ post '/setchosenbox' do #runs when a box is chosen to keep
+     
+     myid=params[:thisid]
+     @session=Session.where(:id => myid).to_a.first
+     @session.chosenbox=params[:chooseboxdd]
+     @session.selectedboxes=@session.chosenbox.to_s
+     @session.save
+     erb :play,  :locals => { :session =>  @session} 
+  
+ end
+ 
+ post '/openbox' do
+  
+     myid=params[:thisid]
+     @session=Session.where(:id => myid).to_a.first
+     @session.selectedbox=params[:openboxdd]
+     @session.selectedboxes=@session.selectedboxes.to_s+","+(params[:openboxdd]).to_s
+     @session.save
+     erb :play,  :locals => { :session =>  @session}
+  
+ end
+ 
+ 
 	#get '/play/:id' do # Edit article page. Creates a new create page and loads parameters from old article. Made my Nazmus Sakib. 
 	#  
 	#  #@session = Session.order("created_at").last

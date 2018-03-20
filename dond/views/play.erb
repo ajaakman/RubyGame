@@ -1,17 +1,50 @@
 <% user = session.user %><br>
 <% sequence = session.sequence.split(",") %><br>
-<% selectedboxes = session.selectedboxes.split(",") %><br>
+<%=selectedboxes = session.selectedboxes.split(",") %><br>
 <% amounts = session.amounts.split(",") %><br>
 <% chosenbox = session.chosenbox %><br>
 <% selectedbox = session.selectedbox %><br>
+<% myid=session.id %><br>
 
 <% case selectedboxes.length %>
 <% when 0 %> 
 	  <p>Choose the box you want to keep.</p>
-	  stage = select box
-	  reload page
+	  <form action="/setchosenbox" method="post">
+			<select name="chooseboxdd">
+				<%for i in 1..22%>
+					  <option value=<%=i%> >Box <%=i%> </option>
+				<%end%>
+			</select>
+			<input type="hidden" name="thisid" value=<%=myid%> >
+			<input type="submit" value="Choose" >
+	  </form>
+	  
 <% when 21 %>
 	  
 <% else %>
-
+	  <br>
+	  <% for i in 1..22 %>
+			<% if i==chosenbox %>
+				  [X]&nbsp;
+			<% elsif selectedboxes.index(i.to_s)!=nil %>
+				  |_|&nbsp;
+			<%else%>
+				  [<%=i%>]&nbsp; 
+			<% end %>			
+	  <%end%>
+	  
+	  <p>Select the box you want to open.</p>
+	  <form action="/openbox" method="post">
+			<select name="openboxdd">
+				<%for i in 1..22%>
+					<%if selectedboxes.index(i.to_s)==nil%>	
+					  <option value=<%=i%> >Box <%=i%> </option>
+				    <%end%>
+				<%end%>
+			</select>
+			<input type="hidden" name="thisid" value=<%=myid%> >
+			<input type="submit" value="Choose" >
+	  </form>
+	  
+	  
 <% end %>	
