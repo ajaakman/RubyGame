@@ -317,6 +317,31 @@ post '/newgame' do
   
  end
     
+ post '/acceptoffer' do
+   @myoffer=params[:offer]
+   myid=params[:thisid]
+   @session=Session.where(:id => myid).to_a.first
+
+   mychosenbox=@session.chosenbox
+   @sequence=@session.sequence
+   @mychosenamount= @sequence[mychosenbox-1]
+   @session.selectedboxes="1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"
+   @session.save
+   user=@session.user
+   if user != "Guest"
+     @user = User.where(:username => $credentials[0]).to_a.first
+     @user.gamesPlayed = @user.gamesPlayed+1
+     @user.totalWinnings = @user.totalWinnings + @myoffer
+     
+     if @myoffer.to_f >= @mychosenamount.to_f
+        @user.gamesWon+=1
+     end
+     @user.save 
+   end   
+   
+   erb :play, :locals => { :session =>  @session, :offer => @myoffer}
+ end
+ 
  
 	#get '/play/:id' do # Edit article page. Creates a new create page and loads parameters from old article. Made my Nazmus Sakib. 
 	#  

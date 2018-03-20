@@ -20,12 +20,24 @@
 	  </form>
 	  
 <% when 21 %>
+	  Congratulations you accepted offer and won: <%=offer%>
+	  <br>You could have won <b><%=sequence[chosenbox-1]%></b> if you continued playing.
+	  <% if offer.to_f >= sequence[chosenbox-1].to_f%>
+			<br> You won!!
+	  <% else %>
+	       <br> Bad luck, you lost!
+      <%end%>
 	  
 <% else %>
       <%if selectedboxes.length>1%>
 			<br>You opened box <%=selectedbox%> containing amount <%=sequence[selectedbox-1]%>
 			<br>Banker offer=<%=offer.to_s%>
-			<br>	
+			<br>
+			<form action="/acceptoffer" method="post">
+				  <input type="hidden" name="offer" value=<%=offer%> >
+				  <input type="hidden" name="thisid" value=<%=session.id%> >
+				  <input type="submit" value="Accept Offer">
+			</form>
 	  <%end%>
 	  <% for i in 1..22 %>
 			<% if i==chosenbox %>
