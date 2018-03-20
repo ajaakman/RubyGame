@@ -1,6 +1,6 @@
 <% user = session.user %><br>
-<% sequence = session.sequence.split(",") %><br>
-<%=selectedboxes = session.selectedboxes.split(",") %><br>
+<%=sequence = session.sequence.split(",") %><br>
+<% selectedboxes = session.selectedboxes.split(",") %><br>
 <% amounts = session.amounts.split(",") %><br>
 <% chosenbox = session.chosenbox %><br>
 <% selectedbox = session.selectedbox %><br>
@@ -22,7 +22,11 @@
 <% when 21 %>
 	  
 <% else %>
-	  <br>
+      <%if selectedboxes.length>1%>
+			<br>You opened box <%=selectedbox%> containing amount <%=sequence[selectedbox-1]%>
+			<br>Banker offer=<%=offer.to_s%>
+			<br>	
+	  <%end%>
 	  <% for i in 1..22 %>
 			<% if i==chosenbox %>
 				  [X]&nbsp;
@@ -31,6 +35,10 @@
 			<%else%>
 				  [<%=i%>]&nbsp; 
 			<% end %>			
+	  <%end%>
+	  <br><br>
+	  <% for i in 0..10 %>
+			<%=amounts[i]%> &nbsp;&nbsp;&nbsp;&nbsp;    <%=amounts[11+i]%><br>			
 	  <%end%>
 	  
 	  <p>Select the box you want to open.</p>

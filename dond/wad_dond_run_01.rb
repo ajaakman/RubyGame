@@ -292,11 +292,31 @@ post '/newgame' do
      @session=Session.where(:id => myid).to_a.first
      @session.selectedbox=params[:openboxdd]
      @session.selectedboxes=@session.selectedboxes.to_s+","+(params[:openboxdd]).to_s
+     mysequence=@session.sequence.split(",")
+     value=mysequence[@session.selectedbox-1]
+     indx=@session.amounts.split(",").index(value)
+     myamounts=@session.amounts.split(",")
+     myamounts[indx]="----"
+     @session.amounts=myamounts.join(",")
+     
+     
+     total=0.0
+     count=0
+     
+     myamounts.length.times do | i | #calculate offer
+       if myamounts[i] != "----"
+         total+=myamounts[i].to_f
+         count+=1
+       end
+     end
+     
+     @offer=((total/count.to_f)*((22-count.to_f)/22)).round(2)
      @session.save
-     erb :play,  :locals => { :session =>  @session}
+     
+     erb :play,  :locals => { :session =>  @session, :offer => @offer}
   
  end
- 
+    
  
 	#get '/play/:id' do # Edit article page. Creates a new create page and loads parameters from old article. Made my Nazmus Sakib. 
 	#  
