@@ -33,6 +33,7 @@
 	  <% else %>
 			Congratulations you opened your box and won: <%=sequence[chosenbox-1]%>
 			<br>You could have won <b><%=offer%></b> if you accepted the bankers last offer.
+			
 			<% if offer.to_f <= sequence[chosenbox-1].to_f%>
 				  <br> You won!!
 			<% else %>
@@ -46,7 +47,13 @@
 						<% @user.gamesWon+=1 %>
 				  <% end %>
 				  <% @user.save %>
+				  <%event =$credentials[0]+" opened chosen box and finshed a game"%>
+				  <%logDbChanges(event)%>		
+			<% else %>
+				  <%event ="Guest opened chosen box and finshed a game"%>
+				  <%logDbChanges(event)%>		
 			<% end %>
+			
 	  <% end %>
 <% else %>
       <%if selectedboxes.length>1%>

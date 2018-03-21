@@ -185,7 +185,6 @@ post '/reset' do # Admin control for resetting database. Made by Artur Jaakman.
 	User.delete_all
 	User.create(username: "Admin", password: "admin", isAdmin: true, gamesPlayed: 0, totalWinnings: 0.0, gamesWon: 0, lastGameSession: 0) # Creating an Admin account.
 	redirect "/"
-	 
 	event="Datebase Reset"
 	logDbChanges(event)  
 end
@@ -253,14 +252,18 @@ post '/newgame' do
   if $credentials==nil
      myuser="Guest"
    		Session.create(user: myuser, sequence: mysequence, selectedboxes: "", amounts: myvalues, chosenbox: 0, selectedbox: 0)
+   		event="Guest started a new game"
+   		logDbChanges(event)
   else
      myuser=$credentials[0]
    		Session.create(user: myuser, sequence: mysequence, selectedboxes: "", amounts: myvalues, chosenbox: 0, selectedbox: 0)
-
+     
      @Users = User.where(:username => $credentials[0]).to_a.first
      id=Session.order("created_at").last.id
      @Users.lastGameSession= id
      @Users.save
+     event=myuser+" started a new game"
+     logDbChanges(event)
   end
     @session = Session.order("created_at").last 
 	   erb :play,  :locals => { :session =>  @session} 
@@ -284,7 +287,8 @@ post '/newgame' do
      end
      
      @offer=((total/count.to_f)*((22-count.to_f)/22)).round(2)
-	
+	    event =$credentials[0]+" resumed a game with id: "+myLastGameSession
+	    logDbChanges(event)
 	erb :play,  :locals => { :session =>  @session, :offer => @offer} 
  end
  
@@ -351,8 +355,15 @@ post '/newgame' do
      if @myoffer.to_f >= @mychosenamount.to_f
         @user.gamesWon+=1
      end
-     @user.save 
+     @user.save
+     event =$credentials[0]+" accpeted an offer and finshed a game"
+     logDbChanges(event) 
+   
+   else
+     event ="Guest accpeted an offer and finshed a game"
+     logDbChanges(event)   
    end   
+   
    
    erb :play, :locals => { :session =>  @session, :offer => @myoffer}
  end
