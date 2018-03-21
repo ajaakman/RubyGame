@@ -75,6 +75,7 @@ module DOND_Game
 								
 			begin # Inner game loop starts.
 				
+				g.incrementturn
 				g.innergameloop	# This is responsible for allowing the player to open boxes and enter the menu.					
 				
 				if g.selectedboxes.length.to_i < 21	# This is responsible for giving the player an offer if there is more than 2 box left.			
@@ -220,7 +221,7 @@ end
    
    
   def showStartButtons
-	  if $credentials == nil #user is not logged in
+	  if $credentials == nil or [] #user is not logged in
       html='<form action= "/newgame" method= "post" id= "new_game">'		
       html+='<input type= "submit" class= "start_button" value= "Start"></input>'
       html+='</form>'
@@ -265,12 +266,25 @@ post '/newgame' do
 	end
  
  post '/resumegame' do
-	puts "resumed"
+	
 	@Users=User.where(:username => $credentials[0]).to_a.first
 	myLastGameSession=@Users.lastGameSession
 	@session=Session.where(:id => myLastGameSession).to_a.first
+	myamounts=@session.amounts.split(",")
+    
+	total=0.0
+     count=0
+     
+     myamounts.length.times do | i | #calculate offer
+       if myamounts[i] != "----"
+         total+=myamounts[i].to_f
+         count+=1
+       end
+     end
+     
+     @offer=((total/count.to_f)*((22-count.to_f)/22)).round(2)
 	
-	erb :play,  :locals => { :session =>  @session} 
+	erb :play,  :locals => { :session =>  @session, :offer => @offer} 
  end
  
  
@@ -323,9 +337,9 @@ post '/newgame' do
    @session=Session.where(:id => myid).to_a.first
 
    mychosenbox=@session.chosenbox
-   @sequence=@session.sequence
+   @sequence=@session.sequence.split(",")
    @mychosenamount= @sequence[mychosenbox-1]
-   @session.selectedboxes="1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"
+   @session.selectedboxes="1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"
    @session.save
    user=@session.user
    if user != "Guest"
@@ -407,7 +421,7 @@ get '/login' do
 end
 
 get '/rankings' do
-	@list4 = User.all.sort_by { |u| [-u.totalWinnings] } # Sorting list of users by points. Made by Artur Jaakman and Nazmus Sakib.
+	@list4 = User.all.sort_by { |u| [-u.gamesWon] } # Sorting list of users by points. Made by Artur Jaakman and Nazmus Sakib.
 	erb :rankings
 end
 
@@ -485,14 +499,10 @@ end
 
 get '/user/delete/:uzer' do # Deleting user. Made by Artur Jaakman, debugging aid provided by Nazmus Sakib.
 	restricted!
-	n = User.where(:username => params[:uzer]).to_a.first
-	if n.isAdmin == false
-		erb :denied 
-	else
-		n.destroy          
-		@list2 = User.all.sort_by { |u| [u.id] }      
-		redirect '/userlist'
-	end  
+	n = User.where(:username => params[:uzer]).to_a.first	
+	n.destroy          
+	@list2 = User.all.sort_by { |u| [u.id] }      
+	redirect '/userlist'	  
 	event = "User deleted "+params[:uzer]
 	logDbChanges(event)  
 	redirect '/userlist'

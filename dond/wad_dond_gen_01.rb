@@ -71,16 +71,21 @@ module DOND_Game
 		def displayStartMenu
 			begin
 			@output.puts "\n" + '-------------------------------------------------------------------------' + "\n"
-			@output.puts "Menu: (1) Play | (2) LeaderBoards | (9) Exit"
+			@output.puts "Menu: (1) Play | (2) Instructions | (9) Exit"
 			@output.puts '-------------------------------------------------------------------------' + "\n"
 			case @input.gets.chomp
 				when "1"
 					clearScreen
 					break
-				when "2" # LeaderBoards
-					clearScreen
-					# Print Leaderboards
-					@output.puts "These Are the Leaderboards"					
+				when "2" # Instructions
+					clearScreen					
+					@output.puts "When you start a new game you will be asked to select your box."
+					@output.puts "After this you will be asked to continue opening boxes until you've opened all of them."
+					@output.puts "The banker will give you an offer every time you open a box."
+					@output.puts "You can accept the offer by entering y or deny it by entering n."
+					@output.puts "If you don't accept the bankers offer and only 1 box is left, you automatically open your box."
+					@output.puts "Follow the on screen instructions and press enter to open the menu."
+					@output.puts "Enjoy."
 				when "9" # Exit
 					clearScreen
 					finish
@@ -95,12 +100,12 @@ module DOND_Game
 		def answerbanker
 			begin
 				showamounts
-				bankerphoneswithvalue bankercalcsvalue 0
+				bankerphoneswithvalue bankercalcsvalue @turn
 				@output.puts "Do you accept the bankers offer? Input y or n."							
 				case @input.gets.chomp
 					when "y" 									
 						clearScreen
-						@output.puts "CONGRATULATIONS! YOU WON #{bankerphoneswithvalue bankercalcsvalue 0}!"
+						@output.puts "CONGRATULATIONS! YOU WON #{bankerphoneswithvalue bankercalcsvalue @turn}!"
 						@output.puts "You could have won #{sequence[chosenbox-1]}"
 						@output.puts "Press Enter to try again."
 						@input.gets.chomp
@@ -292,8 +297,7 @@ module DOND_Game
 		end
 		
 		def displaychosenboxprompt			
-			@output.puts "Enter the number of the box you wish to keep."
-			return "Enter the number of the box you wish to keep."
+			@output.puts "Enter the number of the box you wish to keep."			
 		end
 				
 		def displaychosenboxerror
@@ -342,23 +346,24 @@ module DOND_Game
 			@output.puts ("#{@openedboxes[guess.to_i - 1]} Status: Opened")			
 		end
 		
-		def bankerphoneswithvalue offer
-			@output.puts "Banker offers you for your chosen box: #{offer}"
-			return "Banker offers you for your chosen box: #{offer}"
+		def bankerphoneswithvalue offer			
+			  @output.puts "Banker offers you for your chosen box: #{offer}"
 		end
 		
-		def bankercalcsvalue value			
+		def bankercalcsvalue turn			
 			# Loop through and add all values of unopened boxes. Divide by number of closed boxes using the numberofboxesclosed function and set var offer to that value.			
-			value = 0
 			total = 0.0
-			count = 0.0
+			count = 0
+			if @amounts == nil
+			  @amounts = [0]
+			end
 			@amounts.length.times do | i |
 				if @amounts[i] != "    "
 					total += @amounts[i].to_f
-					count += 1.0
+					count += 1
 				end
 			end			
-			return (total/count).to_i
+			return ((total/count.to_f)*((22-count.to_f)/22)).round(2)
 		end
 		
 		def numberofboxesclosed

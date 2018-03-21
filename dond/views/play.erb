@@ -1,6 +1,6 @@
 <% user = session.user %><br>
 <% sequence = session.sequence.split(",") %><br>
-<%=selectedboxes = session.selectedboxes.split(",") %><br>
+<% selectedboxes = session.selectedboxes.split(",") %><br>
 <% amounts = session.amounts.split(",") %><br>
 <% chosenbox = session.chosenbox %><br>
 <% selectedbox = session.selectedbox %><br>
@@ -19,8 +19,8 @@
 			<input type="submit" value="Choose" >
 	  </form>
 	  
-<% when 21 %>
-	  <% if selectedboxes.count("1") == 21 %>
+<% when 22 %>
+	  <% if selectedboxes.count("1") == 22 %>
 
 			Congratulations you accepted offer and won: <%=offer%>
 			<br>You could have won <b><%=sequence[chosenbox-1]%></b> if you continued playing.
@@ -49,8 +49,12 @@
 	  <% end %>
 <% else %>
       <%if selectedboxes.length>1%>
-			<br>You opened box <%=selectedbox%> containing amount <%=sequence[selectedbox-1]%>
-			<br>Banker offer=<%=offer.to_s%>
+			<br>You opened box <%=selectedbox%> containing amount <%=sequence[selectedbox-1]%><br> 
+			<% if selectedboxes.length == 21 %>
+				<b>Final Banker offer=<%=offer.to_s%></b>  
+			<% else %>
+				  Banker offer=<%=offer.to_s%>
+			<% end %>
 			<br>
 			<form action="/acceptoffer" method="post">
 				  <input type="hidden" name="offer" value=<%=offer%> >
@@ -58,6 +62,18 @@
 				  <input type="submit" value="Accept Offer">
 			</form>
 	  <%end%>
+	  <p>Select the box you want to open.</p>
+	  <form action="/openbox" method="post">
+			<select name="openboxdd">
+				<%for i in 1..22%>
+					<%if selectedboxes.index(i.to_s)==nil%>	
+					  <option value=<%=i%> >Box <%=i%> </option>
+				    <%end%>
+				<%end%>
+			</select>
+			<input type="hidden" name="thisid" value=<%=myid%> >
+			<input type="submit" value="Choose" >
+	  </form>
 	  <% for i in 1..22 %>
 			<% if i==chosenbox %>
 				  [X]&nbsp;
@@ -71,19 +87,4 @@
 	  <% for i in 0..10 %>
 			<%=amounts[i]%> &nbsp;&nbsp;&nbsp;&nbsp;    <%=amounts[11+i]%><br>			
 	  <%end%>
-	  
-	  <p>Select the box you want to open.</p>
-	  <form action="/openbox" method="post">
-			<select name="openboxdd">
-				<%for i in 1..22%>
-					<%if selectedboxes.index(i.to_s)==nil%>	
-					  <option value=<%=i%> >Box <%=i%> </option>
-				    <%end%>
-				<%end%>
-			</select>
-			<input type="hidden" name="thisid" value=<%=myid%> >
-			<input type="submit" value="Choose" >
-	  </form>
-	  
-	  
 <% end %>	

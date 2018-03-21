@@ -102,3 +102,71 @@
 20 03 2018 at 09:13PM	Admin	User Logged in with user id: Admin
 
 20 03 2018 at 09:17PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 03:02PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 03:09PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 03:11PM	Admin	User deleted User
+
+21 03 2018 at 03:12PM	Admin	User deleted User
+
+21 03 2018 at 03:12PM	Admin	User deleted User
+
+21 03 2018 at 03:12PM	Admin	User deleted User
+
+21 03 2018 at 03:14PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 03:14PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 03:14PM		New user signed up with user id test
+
+21 03 2018 at 03:14PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 03:15PM	Admin	User deleted User
+
+21 03 2018 at 03:15PM	Admin	User deleted User
+
+21 03 2018 at 03:15PM	Admin	User deleted User
+
+21 03 2018 at 03:15PM	Admin	User deleted test
+
+21 03 2018 at 03:15PM	Admin	User promoted to admin with user id: test
+
+21 03 2018 at 03:15PM	Admin	User promoted to admin with user id: User
+
+21 03 2018 at 03:15PM		New user signed up with user id test
+
+21 03 2018 at 03:15PM		New user signed up with user id test2
+
+21 03 2018 at 03:15PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 03:16PM	Admin	User deleted test
+
+21 03 2018 at 03:16PM	Admin	User deleted test
+
+21 03 2018 at 03:16PM	Admin	User deleted test
+
+21 03 2018 at 03:16PM	Admin	User promoted to admin with user id: test
+
+21 03 2018 at 03:16PM	Admin	User promoted to admin with user id: test2
+
+21 03 2018 at 03:18PM	Unknow	New user signed up with user id test
+
+21 03 2018 at 03:18PM	Unknow	New user signed up with user id test2
+
+21 03 2018 at 03:18PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 03:23PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 03:36PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 03:39PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 03:43PM	Unknow	New user signed up with user id test
+
+21 03 2018 at 03:43PM	Unknow	New user signed up with user id test2
+
+21 03 2018 at 03:43PM	test2	User Logged in with user id: test2
+
+21 03 2018 at 03:45PM	test	User Logged in with user id: test
