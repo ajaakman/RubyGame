@@ -9,3 +9,23 @@
 21 03 2018 at 08:59PM	Unknow	Guest started a new game
 
 21 03 2018 at 09:00PM	Unknow	Guest opened chosen box and finshed a game
+
+21 03 2018 at 09:10PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 09:12PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 09:12PM		Guest started a new game
+
+21 03 2018 at 09:15PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 09:28PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 09:29PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 09:31PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 09:33PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 09:36PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 09:37PM	Admin	User Logged in with user id: Admin

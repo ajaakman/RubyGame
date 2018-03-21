@@ -249,7 +249,7 @@ post '/newgame' do
 	myvalues = "0.01,0.10,0.50,1.00,5.00,10.00,50.00,100.00,250.00,500.00,750.00,1000.00,3000.00,5000.00,10000.00,15000.00,20000.00,35000.00,50000.00,75000.00,100000.00,250000.00"
 	mysequence = (myvalues.split(",").shuffle!).join(",")
 	
-  if $credentials==nil
+  if $credentials==nil or ['','']
      myuser="Guest"
    		Session.create(user: myuser, sequence: mysequence, selectedboxes: "", amounts: myvalues, chosenbox: 0, selectedbox: 0)
    		event="Guest started a new game"
@@ -519,6 +519,29 @@ get '/user/delete/:uzer' do # Deleting user. Made by Artur Jaakman, debugging ai
 	logDbChanges(event)  
 	redirect '/userlist'
 end
+
+
+post '/archivetext' do # Admin feature for archiving articles in a .txt file. Made by Nazmus Sakib.
+	  archiveText=""
+   
+   Session.order(updated_at: :desc).each do |session|
+       archiveText+="User: "+session.user
+       archiveText+="\tSequence: "+session.sequence
+       archiveText+="\tSelected Boxes: "+session.selectedboxes
+       archiveText+="\tAmounts: "+session.amounts
+       archiveText+="\tChosen Box: "+session.chosenbox.to_s
+       archiveText+="\tSelected Box: "+session.selectedbox.to_s
+       archiveText+="\tCreated At: "+session.created_at.strftime("%d %m %Y at %I:%M%p")
+       archiveText+="\tUpdated At: "+session.updated_at.strftime("%d %m %Y at %I:%M%p")
+       archiveText+="\n\n\n"
+   end
+   
+  file = File.open("archive.txt", "w")  #write to file
+  file.puts archiveText
+  file.close
+  redirect "/admincontrols"
+end
+
 
 not_found do # Redirect if directory does not exist.
 	status 404	
