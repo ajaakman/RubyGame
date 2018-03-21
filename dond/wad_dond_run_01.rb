@@ -215,8 +215,9 @@ post '/login' do # Login feature, set up by Artur Jaakman.
 	end
 end
   
-get '/' do	
-	erb :home
+get '/' do
+	@totalGames = Session.count
+	erb :home,  :locals => { :totalGames =>  @totalGames}
 end
    
    
