@@ -221,26 +221,26 @@ end
    
    
   def showStartButtons
-	  if $credentials == nil or [] #user is not logged in
+	  if $credentials == nil || $credentials == ["",""]#user is not logged in
       html='<form action= "/newgame" method= "post" id= "new_game">'		
       html+='<input type= "submit" class= "start_button" value= "Start"></input>'
       html+='</form>'
 	  else
       @Users = User.where(:username => $credentials[0]).to_a.first 
-      if(@Users.lastGameSession==0)  #user doesn't have a saved game
-         html='<form action="/newgame" method="post" id="new_game">'
-         #html=+'<input type="hidden" name="_method" value="put">'
-         html+='<input type= "submit" class= "start_button" value= "Start"></input>'
-         html+='</form>' 
-      else
-         html='<form action="/newgame" method="post" id="new_game">'
-         html+='<input type= "submit" class= "start_button" value= "Start"></input>'
-         html+='</form>'
-
-         html+='<form action="/resumegame" method="post" id="new_game">'
-         html+='<input type= "submit" class= "start_button" value= "Resume"></input>'
-         html+='</form>'
-      end 		
+			if(@Users.lastGameSession==0)  #user doesn't have a saved game
+			   html='<form action="/newgame" method="post" id="new_game">'
+			   #html=+'<input type="hidden" name="_method" value="put">'
+			   html+='<input type= "submit" class= "start_button" value= "Start"></input>'
+			   html+='</form>' 
+			else
+			   html='<form action="/newgame" method="post" id="new_game">'
+			   html+='<input type= "submit" class= "start_button" value= "Start"></input>'
+			   html+='</form><br>'
+	  
+			   html+='<form action="/resumegame" method="post" id="new_game">'
+			   html+='<input type= "submit" class= "start_button" value= "Resume"></input>'
+			   html+='</form>'
+			end 		
 	  end
 	  return html
   end
@@ -287,7 +287,7 @@ post '/newgame' do
      end
      
      @offer=((total/count.to_f)*((22-count.to_f)/22)).round(2)
-	    event =$credentials[0]+" resumed a game with id: "+myLastGameSession
+	    event =$credentials[0]+" resumed a game with id: "+myLastGameSession.to_s
 	    logDbChanges(event)
 	erb :play,  :locals => { :session =>  @session, :offer => @offer} 
  end

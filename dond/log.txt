@@ -29,3 +29,173 @@
 21 03 2018 at 09:36PM	Admin	User Logged in with user id: Admin
 
 21 03 2018 at 09:37PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 09:44PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 09:44PM	Admin	Guest started a new game
+
+21 03 2018 at 09:46PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 09:46PM	Admin	Admin started a new game
+
+21 03 2018 at 09:51PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 09:51PM	test	User Logged in with user id: test
+
+21 03 2018 at 09:53PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 09:55PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 09:56PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 09:57PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 09:57PM	Admin	Admin resumed a game with id: 163
+
+21 03 2018 at 09:58PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 09:59PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 10:00PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 10:00PM		Guest started a new game
+
+21 03 2018 at 10:00PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 10:00PM		Guest started a new game
+
+21 03 2018 at 10:01PM		Guest started a new game
+
+21 03 2018 at 10:02PM		Guest started a new game
+
+21 03 2018 at 10:02PM		Guest started a new game
+
+21 03 2018 at 10:02PM		Guest started a new game
+
+21 03 2018 at 10:03PM		Guest started a new game
+
+21 03 2018 at 10:03PM		Guest opened chosen box and finshed a game
+
+21 03 2018 at 10:06PM		Guest started a new game
+
+21 03 2018 at 10:07PM		Guest started a new game
+
+21 03 2018 at 10:07PM		Guest started a new game
+
+21 03 2018 at 10:08PM		Guest started a new game
+
+21 03 2018 at 10:09PM		Guest started a new game
+
+21 03 2018 at 10:09PM		Guest started a new game
+
+21 03 2018 at 10:10PM		Guest started a new game
+
+21 03 2018 at 10:11PM		Guest started a new game
+
+21 03 2018 at 10:14PM		Guest started a new game
+
+21 03 2018 at 10:28PM		Guest started a new game
+
+21 03 2018 at 10:28PM		Guest started a new game
+
+21 03 2018 at 10:28PM		Guest started a new game
+
+21 03 2018 at 10:29PM		Guest started a new game
+
+21 03 2018 at 10:30PM		Guest started a new game
+
+21 03 2018 at 10:30PM		Guest started a new game
+
+21 03 2018 at 10:31PM		Guest started a new game
+
+21 03 2018 at 10:32PM		Guest started a new game
+
+21 03 2018 at 10:34PM		Guest started a new game
+
+21 03 2018 at 10:35PM		Guest started a new game
+
+21 03 2018 at 10:36PM		Guest started a new game
+
+21 03 2018 at 10:36PM		Guest started a new game
+
+21 03 2018 at 10:39PM		Guest started a new game
+
+21 03 2018 at 10:40PM		Guest started a new game
+
+21 03 2018 at 10:42PM		Guest started a new game
+
+21 03 2018 at 10:43PM		Guest started a new game
+
+21 03 2018 at 10:44PM		Guest started a new game
+
+21 03 2018 at 10:44PM		Guest started a new game
+
+21 03 2018 at 10:45PM		Guest started a new game
+
+21 03 2018 at 10:45PM		Guest started a new game
+
+21 03 2018 at 10:45PM		Guest started a new game
+
+21 03 2018 at 10:46PM		Guest started a new game
+
+21 03 2018 at 10:46PM		Guest started a new game
+
+21 03 2018 at 10:46PM		Guest started a new game
+
+21 03 2018 at 10:47PM		Guest started a new game
+
+21 03 2018 at 10:48PM		Guest started a new game
+
+21 03 2018 at 10:50PM		Guest started a new game
+
+21 03 2018 at 10:51PM		Guest started a new game
+
+21 03 2018 at 10:51PM		Guest started a new game
+
+21 03 2018 at 10:52PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 10:52PM	Admin	Guest started a new game
+
+21 03 2018 at 10:52PM	Admin	Guest accpeted an offer and finshed a game
+
+21 03 2018 at 10:52PM	Admin	Guest started a new game
+
+21 03 2018 at 10:52PM	Admin	Guest opened chosen box and finshed a game
+
+21 03 2018 at 10:52PM	Admin	Guest started a new game
+
+21 03 2018 at 10:54PM		New user signed up with user id 
+
+21 03 2018 at 10:54PM	Admin	User Logged in with user id: Admin
+
+21 03 2018 at 10:56PM	Admin	Guest started a new game
+
+21 03 2018 at 10:57PM	Admin	Guest started a new game
+
+21 03 2018 at 10:57PM	Admin	Guest opened chosen box and finshed a game
+
+21 03 2018 at 10:57PM	Admin	Admin resumed a game with id: 163
+
+21 03 2018 at 10:57PM	Admin	Admin accpeted an offer and finshed a game
+
+21 03 2018 at 10:57PM	Admin	Guest started a new game
+
+21 03 2018 at 10:59PM	Admin	Guest started a new game
+
+21 03 2018 at 11:00PM	Admin	Guest started a new game
+
+21 03 2018 at 11:00PM	Admin	Guest started a new game
+
+21 03 2018 at 11:00PM	Admin	Guest started a new game
+
+21 03 2018 at 11:01PM	Admin	Guest started a new game
+
+21 03 2018 at 11:01PM	Admin	Guest started a new game
+
+21 03 2018 at 11:02PM	Admin	Guest started a new game
+
+21 03 2018 at 11:02PM	Admin	Guest started a new game
+
+21 03 2018 at 11:02PM	Admin	Guest opened chosen box and finshed a game
+
+21 03 2018 at 11:02PM	Admin	Guest started a new game

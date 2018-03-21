@@ -6,19 +6,23 @@
 <% selectedbox = session.selectedbox %><br>
 <% myid=session.id %><br>
 
-
+<div class="content">
 <% case selectedboxes.length %>
 <% when 0 %> 
-	  <p>Choose the box you want to keep.</p>
+	  Choose the box you want to keep.<br>
 	  <form action="/setchosenbox" method="post">
-			<select name="chooseboxdd">
+			
+			<select class="custom-select" name="chooseboxdd">
+			
 				<%for i in 1..22%>
-					  <option value=<%=i%> >Box <%=i%> </option>
+				      
+					  <option value=<%=i%> >Box <%=i%></option>
+					  
 				<%end%>
 			</select>
 			<input type="hidden" name="thisid" value=<%=myid%> >
-			<input type="submit" value="Choose" >
-	  </form>
+			<input type="submit" class= "start_button" value="Choose">
+	  </form><br>
 	  
 <% when 22 %>
 	  <% if selectedboxes.count("1") == 22 %>
@@ -67,12 +71,12 @@
 			<form action="/acceptoffer" method="post">
 				  <input type="hidden" name="offer" value=<%=offer%> >
 				  <input type="hidden" name="thisid" value=<%=session.id%> >
-				  <input type="submit" value="Accept Offer">
+				  <input type="submit" class= "start_button" value="Accept Offer">
 			</form>
 	  <%end%>
-	  <p>Select the box you want to open.</p>
+	  Select the box you want to open. <br>
 	  <form action="/openbox" method="post">
-			<select name="openboxdd">
+			<select name="openboxdd" class="custom-select">
 				<%for i in 1..22%>
 					<%if selectedboxes.index(i.to_s)==nil%>	
 					  <option value=<%=i%> >Box <%=i%> </option>
@@ -80,19 +84,20 @@
 				<%end%>
 			</select>
 			<input type="hidden" name="thisid" value=<%=myid%> >
-			<input type="submit" value="Open" >
+			<input type="submit" class= "start_button" value="Open" >
 	  </form>
 	  <% for i in 1..22 %>
 			<% if i==chosenbox %>
-				  [X]&nbsp;
+				  <div class="boxes">[X]</div>
 			<% elsif selectedboxes.index(i.to_s)!=nil %>
-				  |_|&nbsp;
+				  <div class="boxes">|_|</div>
 			<%else%>
-				  [<%=i%>]&nbsp; 
+				 <div class="boxes"> [<%=i%>]</div>
 			<% end %>			
 	  <%end%>
 	  <br><br>
 	  <% for i in 0..10 %>
-			<%=amounts[i]%> &nbsp;&nbsp;&nbsp;&nbsp;    <%=amounts[11+i]%><br>			
+			<div class="values"><%=amounts[i]%></div> &nbsp;&nbsp;&nbsp;&nbsp;<div class="values"><%=amounts[11+i]%></div><br>			
 	  <%end%>
-<% end %>	
+<% end %>
+</div>

@@ -1,7 +1,7 @@
 
     <h1>User Rankings</h1><br>
     
-    <p>Users with most amount of wins.</p>
+    <p>Users with the most amount of wins.</p>
     
     <div class="users"> 
         
@@ -13,11 +13,11 @@
 			
             <div class="table_cell">Games Played</div>
 			
-			<div class="table_cell">Total Winnings</div>
-			
 			<div class="table_cell">Win Percent</div>
 			
 			<div class="table_cell">Average Winnings</div>
+			
+			<div class="table_cell">Total <br>Winnings</div>
                 
         </div>
         
@@ -31,11 +31,11 @@
 				
                 <div class="table_cell"><%= liste.gamesPlayed %></div>
 				
-				<div class="table_cell"><%= liste.totalWinnings.round(2) %></div>
-				
 				<div class="table_cell"><%= ((liste.gamesWon.to_f/liste.gamesPlayed.to_f).round(2))*100 %>%</div>
 				
 				<div class="table_cell"><%= (liste.totalWinnings/liste.gamesPlayed).round(2) %></div>
+				
+				<div class="table_cell"><%= liste.totalWinnings.round(2) %></div>
             
             </div>   
      
