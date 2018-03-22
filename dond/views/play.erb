@@ -10,23 +10,17 @@
 <% case selectedboxes.length %>
 <% when 0 %> 
 	  Choose the box you want to keep.<br>
-	  <form action="/setchosenbox" method="post">
-			
-			<select class="custom-select" name="chooseboxdd">
-			
-				<%for i in 1..22%>
-				      
-					  <option value=<%=i%> >Box <%=i%></option>
-					  
+	  <form action="/setchosenbox" method="post">			
+			<select class="custom-select" name="chooseboxdd">			
+				<%for i in 1..22%>				      
+					  <option value=<%=i%> >Box <%=i%></option>					  
 				<%end%>
 			</select>
 			<input type="hidden" name="thisid" value=<%=myid%> >
 			<input type="submit" class= "start_button" value="Choose">
-	  </form><br>
-	  
+	  </form><br>	  
 <% when 22 %>
 	  <% if selectedboxes.count("1") == 22 %>
-
 			Congratulations you accepted offer and won: <%=offer%>
 			<br>You could have won <b><%=sequence[chosenbox-1]%></b> if you continued playing.
 			<% if offer.to_f >= sequence[chosenbox-1].to_f%>
@@ -56,8 +50,7 @@
 			<% else %>
 				  <%event ="Guest opened chosen box and finshed a game"%>
 				  <%logDbChanges(event)%>		
-			<% end %>
-			
+			<% end %>			
 	  <% end %>
 <% else %>
       <%if selectedboxes.length>1%>

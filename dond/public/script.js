@@ -1,18 +1,5 @@
 # Username and Password validation funcrion. 
 
-function showBox(n)
-{
-    document.getElementById("boxDiv"+i).innerHTML="100";
-    
-    
-}
-
-
-
-
-
-
-
 function validateForm() {
 
     var x = document.forms["myForm"]["username"].value;

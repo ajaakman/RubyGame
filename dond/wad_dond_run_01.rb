@@ -4,13 +4,13 @@
 require 'sinatra'		
 require 'sinatra/activerecord'
 
- ActiveRecord::Base.establish_connection(
-	  :adapter => 'sqlite3',
-	  :database => 'dond.db'
-	) 
+ActiveRecord::Base.establish_connection(
+	:adapter => 'sqlite3',
+	:database => 'dond.db'
+) 
 
 class User < ActiveRecord::Base
-	validates :username, presence: true, uniqueness: true
+	validates :username, presence: true, exclusion: { in: %w(Guest)}
 	validates :password, presence: true
 	#validates :isAdmin, presence: true
 	validates :gamesPlayed, presence: true
@@ -19,15 +19,7 @@ class User < ActiveRecord::Base
 	validates :lastGameSession, presence: true
 end
 
-
-class Session < ActiveRecord::Base
-# validates :user, presence: true
-#	validates :sequence,
-#	validates :selectedboxes, presence: true
-#	validates :openedboxes, presence: true
-#	validates :amounts, presence: true
-#	validates :chosenbox, presence: true
-#	validates :selectedbox, presence: true
+class Session < ActiveRecord::Base # Storing game sessions here.
 end
 
 # The file where you are to write code to pass the tests must be present in the same folder.
@@ -65,8 +57,10 @@ module DOND_Game
 		
 		# Any code added to command line game should be added below.
 		
+		# All game logic code written from scrach in collaboraion by Artur Jaakman and Md Nazmus Sakib, except where specified.
+		
 		catch :restart do # Used to restart the game.		
-		g.clearScreen
+		g.clearScreen # Tested on Windows. Might not work in all command lines. 
 		g.start	# Calls start method.
 		
 		begin # Outer game loop start.
@@ -100,13 +94,10 @@ end
 # Sinatra routes
 
 	# Any code added to web-based game should be added below.
-
-def test
-	puts "test"
-end
   
-helpers do # Helpers used to validate user access level, 3 levels of access: visitor, user, admin. Set up by Artur Jaakman, with Nazmus Sakib providing debugging support.
- 
+# All code based on WAD practicals and written in collaboration by Artur Jaakman and Md Nazmus Sakib.
+helpers do # Helpers used to validate user access level, 3 levels of access: visitor, user, admin. 
+	
 	def restricted! # Only admins.
 		if authorizedadmin?
 			return
@@ -153,8 +144,7 @@ helpers do # Helpers used to validate user access level, 3 levels of access: vis
 end
 
 
-def logDbChanges(event) # Method called with the event as parameter for Database Log. Written by Nazmus Sakib.
-
+def logDbChanges(event) # Method called with the event as parameter for Database Log.	
 	file = File.open("log.txt")  # Read the log text file and get current content.
 	currentText="";
 	file.each do |line|	
@@ -177,19 +167,19 @@ def logDbChanges(event) # Method called with the event as parameter for Database
 	file.close	
 end
 
-post '/reset' do # Admin control for resetting database. Made by Artur Jaakman.
- 
+post '/reset' do # Admin control for resetting database.	
 	restricted!
 	
 	$credentials = ['','']	
 	User.delete_all
+	Session.delete_all
 	User.create(username: "Admin", password: "admin", isAdmin: true, gamesPlayed: 0, totalWinnings: 0.0, gamesWon: 0, lastGameSession: 0) # Creating an Admin account.
 	redirect "/"
 	event="Datebase Reset"
 	logDbChanges(event)  
 end
 
-post '/login' do # Login feature, set up by Artur Jaakman.
+post '/login' do	
 	$credentials = [params[:username],params[:password]]
  
 	@Users = User.where(:username => $credentials[0]).to_a.first
@@ -197,14 +187,14 @@ post '/login' do # Login feature, set up by Artur Jaakman.
 	if @Users
 
     if @Users.password == $credentials[1]
-          event="User Logged in with user id: "+ params[:username]
-          logDbChanges(event);  
-          redirect '/'  
+		event="User Logged in with user id: "+ params[:username]
+		logDbChanges(event);  
+		redirect '/'  
     else  
-          $credentials = ['','']
-          event="Logging attempt failed: "+ params[:username]
-          logDbChanges(event);
-          redirect '/wrongaccount'
+		$credentials = ['','']
+		event="Logging attempt failed: "+ params[:username]
+		logDbChanges(event);
+		redirect '/wrongaccount'
     end
     else
         $credentials = ['','']
@@ -217,212 +207,146 @@ end
 get '/' do
 	@totalGames = Session.count
 	erb :home,  :locals => { :totalGames =>  @totalGames}
-end
+end   
    
+  def showStartButtons # Show start button if player is not logged in. And Start and Resume if they are.
+	if $credentials == nil || $credentials == ["",""] # User is not logged in.
+	html='<form action= "/newgame" method= "post" id= "new_game">'		
+	html+='<input type= "submit" class= "start_button" value= "Start"></input>'
+	html+='</form>'
+	html+= 'Log in to have the ability to resume last played game.'
+	else
+		@Users = User.where(:username => $credentials[0]).to_a.first 
+		if(@Users.lastGameSession==0) # User doesn't have a saved game
+			html='<form action="/newgame" method="post" id="new_game">'
+			html+='<input type= "submit" class= "start_button" value= "Start"></input>'
+			html+='</form>' 
+			html+= 'You have no saved games.'
+		else
+			html='<form action="/newgame" method="post" id="new_game">'
+			html+='<input type= "submit" class= "start_button" value= "Start"></input>'
+			html+='</form><br>'
    
-  def showStartButtons
-	  if $credentials == nil || $credentials == ["",""]#user is not logged in
-      html='<form action= "/newgame" method= "post" id= "new_game">'		
-      html+='<input type= "submit" class= "start_button" value= "Start"></input>'
-      html+='</form>'
-	  else
-      @Users = User.where(:username => $credentials[0]).to_a.first 
-			if(@Users.lastGameSession==0)  #user doesn't have a saved game
-			   html='<form action="/newgame" method="post" id="new_game">'
-			   #html=+'<input type="hidden" name="_method" value="put">'
-			   html+='<input type= "submit" class= "start_button" value= "Start"></input>'
-			   html+='</form>' 
-			else
-			   html='<form action="/newgame" method="post" id="new_game">'
-			   html+='<input type= "submit" class= "start_button" value= "Start"></input>'
-			   html+='</form><br>'
-	  
-			   html+='<form action="/resumegame" method="post" id="new_game">'
-			   html+='<input type= "submit" class= "start_button" value= "Resume"></input>'
-			   html+='</form>'
-			end 		
-	  end
-	  return html
+			html+='<form action="/resumegame" method="post" id="new_game">'
+			html+='<input type= "submit" class= "start_button" value= "Resume"></input>'
+			html+='</form>'
+		end 		
+	end
+	return html
   end
   
-post '/newgame' do
+post '/newgame' do # Crearing a new game session.
 	myvalues = "0.01,0.10,0.50,1.00,5.00,10.00,50.00,100.00,250.00,500.00,750.00,1000.00,3000.00,5000.00,10000.00,15000.00,20000.00,35000.00,50000.00,75000.00,100000.00,250000.00"
 	mysequence = (myvalues.split(",").shuffle!).join(",")
 	
-  if $credentials==nil or ['','']
-     myuser="Guest"
-   		Session.create(user: myuser, sequence: mysequence, selectedboxes: "", amounts: myvalues, chosenbox: 0, selectedbox: 0)
-   		event="Guest started a new game"
-   		logDbChanges(event)
-  else
-     myuser=$credentials[0]
-   		Session.create(user: myuser, sequence: mysequence, selectedboxes: "", amounts: myvalues, chosenbox: 0, selectedbox: 0)
+	if $credentials == nil || $credentials == ["",""] # Set player as guest if they are not logged in.
+		myuser="Guest"
+		Session.create(user: myuser, sequence: mysequence, selectedboxes: "", amounts: myvalues, chosenbox: 0, selectedbox: 0)
+		event="Guest started a new game"
+		logDbChanges(event)
+	else
+    myuser=$credentials[0]
+   	Session.create(user: myuser, sequence: mysequence, selectedboxes: "", amounts: myvalues, chosenbox: 0, selectedbox: 0)
      
-     @Users = User.where(:username => $credentials[0]).to_a.first
-     id=Session.order("created_at").last.id
-     @Users.lastGameSession= id
-     @Users.save
-     event=myuser+" started a new game"
-     logDbChanges(event)
-  end
-    @session = Session.order("created_at").last 
-	   erb :play,  :locals => { :session =>  @session} 
+	@Users = User.where(:username => $credentials[0]).to_a.first
+	id=Session.order("created_at").last.id
+	@Users.lastGameSession= id
+	@Users.save
+	event=myuser+" started a new game"
+	logDbChanges(event)
 	end
+    @session = Session.order("created_at").last 
+		erb :play,  :locals => { :session =>  @session} 
+end
  
- post '/resumegame' do
-	
+post '/resumegame' do # Loading last saved game session.	
 	@Users=User.where(:username => $credentials[0]).to_a.first
 	myLastGameSession=@Users.lastGameSession
 	@session=Session.where(:id => myLastGameSession).to_a.first
 	myamounts=@session.amounts.split(",")
     
 	total=0.0
-     count=0
+    count=0
      
-     myamounts.length.times do | i | #calculate offer
-       if myamounts[i] != "----"
-         total+=myamounts[i].to_f
-         count+=1
-       end
-     end
+    myamounts.length.times do | i | #calculate offer
+		if myamounts[i] != "----"
+			total+=myamounts[i].to_f
+			count+=1
+		end
+    end
      
-     @offer=((total/count.to_f)*((22-count.to_f)/22)).round(2)
+    @offer=((total/count.to_f)*((22-count.to_f)/22)).round(2)
 	    event =$credentials[0]+" resumed a game with id: "+myLastGameSession.to_s
 	    logDbChanges(event)
 	erb :play,  :locals => { :session =>  @session, :offer => @offer} 
- end
- 
- 
- 
- post '/setchosenbox' do #runs when a box is chosen to keep
-     
-     myid=params[:thisid]
-     @session=Session.where(:id => myid).to_a.first
-     @session.chosenbox=params[:chooseboxdd]
-     @session.selectedboxes=@session.chosenbox.to_s
-     @session.save
-     erb :play,  :locals => { :session =>  @session} 
+end
   
- end
+post '/setchosenbox' do # Runs when a box is chosen to keep.     
+	myid=params[:thisid]
+	@session=Session.where(:id => myid).to_a.first
+	@session.chosenbox=params[:chooseboxdd]
+	@session.selectedboxes=@session.chosenbox.to_s
+	@session.save
+	erb :play,  :locals => { :session =>  @session}   
+end
  
- post '/openbox' do
-  
-     myid=params[:thisid]
-     @session=Session.where(:id => myid).to_a.first
-     @session.selectedbox=params[:openboxdd]
-     @session.selectedboxes=@session.selectedboxes.to_s+","+(params[:openboxdd]).to_s
-     mysequence=@session.sequence.split(",")
-     value=mysequence[@session.selectedbox-1]
-     indx=@session.amounts.split(",").index(value)
-     myamounts=@session.amounts.split(",")
-     myamounts[indx]="----"
-     @session.amounts=myamounts.join(",")
+post '/openbox' do  
+	myid=params[:thisid]
+	@session=Session.where(:id => myid).to_a.first
+	@session.selectedbox=params[:openboxdd]
+	@session.selectedboxes=@session.selectedboxes.to_s+","+(params[:openboxdd]).to_s
+	mysequence=@session.sequence.split(",")
+	value=mysequence[@session.selectedbox-1]
+	indx=@session.amounts.split(",").index(value)
+	myamounts=@session.amounts.split(",")
+	myamounts[indx]="----"
+	@session.amounts=myamounts.join(",")
+	
+	
+	total=0.0
+	count=0
      
+    myamounts.length.times do | i | #calculate offer
+		if myamounts[i] != "----"
+			total+=myamounts[i].to_f
+			count+=1
+		end
+    end
      
-     total=0.0
-     count=0
-     
-     myamounts.length.times do | i | #calculate offer
-       if myamounts[i] != "----"
-         total+=myamounts[i].to_f
-         count+=1
-       end
-     end
-     
-     @offer=((total/count.to_f)*((22-count.to_f)/22)).round(2)
-     @session.save
-     
-     erb :play,  :locals => { :session =>  @session, :offer => @offer}
-  
+	@offer=((total/count.to_f)*((22-count.to_f)/22)).round(2)
+	@session.save
+	
+	erb :play,  :locals => { :session =>  @session, :offer => @offer} 
  end
     
- post '/acceptoffer' do
-   @myoffer=params[:offer]
-   myid=params[:thisid]
-   @session=Session.where(:id => myid).to_a.first
-
-   mychosenbox=@session.chosenbox
-   @sequence=@session.sequence.split(",")
-   @mychosenamount= @sequence[mychosenbox-1]
-   @session.selectedboxes="1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"
-   @session.save
-   user=@session.user
-   if user != "Guest"
-     @user = User.where(:username => $credentials[0]).to_a.first
-     @user.gamesPlayed = @user.gamesPlayed+1
-     @user.totalWinnings = @user.totalWinnings + @myoffer.to_f
-     
-     if @myoffer.to_f >= @mychosenamount.to_f
-        @user.gamesWon+=1
-     end
-     @user.save
-     event =$credentials[0]+" accpeted an offer and finshed a game"
-     logDbChanges(event) 
-   
-   else
-     event ="Guest accpeted an offer and finshed a game"
-     logDbChanges(event)   
-   end   
-   
-   
-   erb :play, :locals => { :session =>  @session, :offer => @myoffer}
- end
+post '/acceptoffer' do
+	@myoffer=params[:offer]
+	myid=params[:thisid]
+	@session=Session.where(:id => myid).to_a.first
  
-
- 
-	#get '/play/:id' do # Edit article page. Creates a new create page and loads parameters from old article. Made my Nazmus Sakib. 
-	#  
-	#  #@session = Session.order("created_at").last
-	#end   
-       
-  #def showboxes
-  #   if $flag=="Game Started"
-  #      #show boxes to choose to keep
-  #      boxHtml=""
-  #      for i in 1..22
-  #        line1='<input type="button" value ="Choose">  </input>'
-  #        boxHtml+=line1
-  #      end
-  #      $flag=""
-  #   else
-  #      #show boxes to reveal amount
-  #      boxHtml=""
-  #      for i in 1..22
-  #        line1='<input type="button" value ="Open">  </input>'
-  #        boxHtml+=line1
-  #      end
-  #      
-  #   end
-  #   return boxHtml
-  # end
-    
-    
-    
-#  def createBoxesView  #creates html strings to create buttons to open boxes
-#   
-#    boxHtml=""
-#    for i in 1..22
-#       
-#		line1='<div class="closedBox" id="boxDiv'+i.to_s+'">'
-#		line2='<input type="button" class = "eachBox" onclick ="showBox('+i.to_s+')" value =" Open">  </input>'
-#		line3='</div>'
-#		if i==12
-#			boxHtml+="<br><br><br>"+line1+line2+line3
-#		else
-#			boxHtml+=line1+line2+line3
-#		end
-#    end
-#    return boxHtml
-#end
-
-#def showAmounts   
-#    myAmounts=""
-#    ($amounts.length/2).times do |i|
-#        line="<br>"+"#{$amounts[i]}     #{$amounts[11+i]}"
-#        myAmounts+=line
-#    end   
-#    return myAmounts
-#end
+	mychosenbox=@session.chosenbox
+	@sequence=@session.sequence.split(",")
+	@mychosenamount= @sequence[mychosenbox-1]
+	@session.selectedboxes="1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1"
+	@session.save
+	user=@session.user
+	if user != "Guest"
+		@user = User.where(:username => $credentials[0]).to_a.first
+		@user.gamesPlayed = @user.gamesPlayed+1
+		@user.totalWinnings = @user.totalWinnings + @myoffer.to_f
+	  
+		if @myoffer.to_f >= @mychosenamount.to_f
+			@user.gamesWon+=1
+		end
+	@user.save
+	event =$credentials[0]+" accpeted an offer and finshed a game"
+	logDbChanges(event)    
+	else
+		event ="Guest accpeted an offer and finshed a game"
+		logDbChanges(event)   
+	end   
+	erb :play, :locals => { :session =>  @session, :offer => @myoffer}
+end	
 
 get '/about' do	
 	erb :about	
@@ -433,7 +357,7 @@ get '/login' do
 end
 
 get '/rankings' do
-	@list4 = User.all.sort_by { |u| [-u.gamesWon] } # Sorting list of users by points. Made by Artur Jaakman and Nazmus Sakib.
+	@list4 = User.all.sort_by { |u| [-u.gamesWon] } # Sorting list of users by total games won.
 	erb :rankings
 end
 
@@ -441,7 +365,7 @@ get '/createaccount' do
    erb :createaccount
 end
 
-post '/createaccount' do # Create Account. Set up by Artur Jaakman
+post '/createaccount' do
 	n = User.new    
 	n.username = params[:username] 
 	n.password = params[:password]   
@@ -473,7 +397,7 @@ get '/admincontrols' do
 	erb :admincontrols
 end
 
-get '/userlist' do # Creating user list made by Artur Jaakman.
+get '/userlist' do 
 	restricted!
 	@list2 = User.all.sort_by { |u| [u.id] }   
 	erb :userlist
@@ -499,7 +423,7 @@ get '/notfound' do
 	erb :notfound 
 end
 
-put '/user/:uzer' do # Admin can promote Users to Admin. Created by Artur Jaakman.
+put '/user/:uzer' do # Admin can promote Users to Admin.
 	restricted! 
 	n = User.where(:username => params[:uzer]).to_a.first
 	n.isAdmin = params[:isAdmin] ? 1 : 0  
@@ -509,7 +433,7 @@ put '/user/:uzer' do # Admin can promote Users to Admin. Created by Artur Jaakma
 	redirect '/userlist'
 end
 
-get '/user/delete/:uzer' do # Deleting user. Made by Artur Jaakman, debugging aid provided by Nazmus Sakib.
+get '/user/delete/:uzer' do # Deleting user.
 	restricted!
 	n = User.where(:username => params[:uzer]).to_a.first	
 	n.destroy          
@@ -520,28 +444,26 @@ get '/user/delete/:uzer' do # Deleting user. Made by Artur Jaakman, debugging ai
 	redirect '/userlist'
 end
 
-
-post '/archivetext' do # Admin feature for archiving articles in a .txt file. Made by Nazmus Sakib.
-	  archiveText=""
+post '/archivetext' do # Admin feature for archiving articles in a .txt file.
+	archiveText=""
    
-   Session.order(updated_at: :desc).each do |session|
-       archiveText+="User: "+session.user
-       archiveText+="\tSequence: "+session.sequence
-       archiveText+="\tSelected Boxes: "+session.selectedboxes
-       archiveText+="\tAmounts: "+session.amounts
-       archiveText+="\tChosen Box: "+session.chosenbox.to_s
-       archiveText+="\tSelected Box: "+session.selectedbox.to_s
-       archiveText+="\tCreated At: "+session.created_at.strftime("%d %m %Y at %I:%M%p")
-       archiveText+="\tUpdated At: "+session.updated_at.strftime("%d %m %Y at %I:%M%p")
-       archiveText+="\n\n\n"
-   end
-   
-  file = File.open("archive.txt", "w")  #write to file
-  file.puts archiveText
-  file.close
-  redirect "/admincontrols"
+	Session.order(updated_at: :desc).each do |session|
+		archiveText+="User: "+session.user
+		archiveText+="\tSequence: "+session.sequence
+		archiveText+="\tSelected Boxes: "+session.selectedboxes
+		archiveText+="\tAmounts: "+session.amounts
+		archiveText+="\tChosen Box: "+session.chosenbox.to_s
+		archiveText+="\tSelected Box: "+session.selectedbox.to_s
+		archiveText+="\tCreated At: "+session.created_at.strftime("%d %m %Y at %I:%M%p")
+		archiveText+="\tUpdated At: "+session.updated_at.strftime("%d %m %Y at %I:%M%p")
+		archiveText+="\n\n\n"
+	end
+	
+	file = File.open("archive.txt", "w")
+	file.puts archiveText
+	file.close
+	redirect "/admincontrols"
 end
-
 
 not_found do # Redirect if directory does not exist.
 	status 404	

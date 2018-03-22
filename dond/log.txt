@@ -199,3 +199,53 @@
 21 03 2018 at 11:02PM	Admin	Guest opened chosen box and finshed a game
 
 21 03 2018 at 11:02PM	Admin	Guest started a new game
+
+22 03 2018 at 02:25PM	Unknow	Guest started a new game
+
+22 03 2018 at 02:25PM	Unknow	Guest accpeted an offer and finshed a game
+
+22 03 2018 at 02:25PM	Admin	User Logged in with user id: Admin
+
+22 03 2018 at 02:26PM	Admin	Admin resumed a game with id: 163
+
+22 03 2018 at 02:26PM	test	User Logged in with user id: test
+
+22 03 2018 at 02:26PM		New user signed up with user id test3
+
+22 03 2018 at 02:26PM	test3	User Logged in with user id: test3
+
+22 03 2018 at 02:27PM	test3	User Logged in with user id: test3
+
+22 03 2018 at 02:27PM	test3	Guest started a new game
+
+22 03 2018 at 02:27PM	test3	Guest started a new game
+
+22 03 2018 at 02:28PM	test3	Guest started a new game
+
+22 03 2018 at 02:28PM	test3	Guest accpeted an offer and finshed a game
+
+22 03 2018 at 02:28PM	Admin	User Logged in with user id: Admin
+
+22 03 2018 at 02:28PM	Admin	Guest started a new game
+
+22 03 2018 at 02:29PM	Admin	Admin resumed a game with id: 163
+
+22 03 2018 at 02:29PM	Admin	Admin resumed a game with id: 163
+
+22 03 2018 at 02:29PM	Admin	Guest started a new game
+
+22 03 2018 at 02:29PM	Admin	Admin resumed a game with id: 163
+
+22 03 2018 at 02:32PM	Admin	User Logged in with user id: Admin
+
+22 03 2018 at 02:32PM	Admin	Admin resumed a game with id: 163
+
+22 03 2018 at 02:32PM	Admin	Admin started a new game
+
+22 03 2018 at 02:32PM	Admin	Admin resumed a game with id: 230
+
+22 03 2018 at 02:32PM	test3	User Logged in with user id: test3
+
+22 03 2018 at 02:32PM	test3	test3 started a new game
+
+22 03 2018 at 02:32PM	test3	test3 resumed a game with id: 231

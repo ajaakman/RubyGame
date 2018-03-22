@@ -13,7 +13,5 @@ class CreateUsers < ActiveRecord::Migration[5.0]
       t.timestamps null: false 
     end
       User.create(username: "Admin", password: "admin", isAdmin: true, gamesPlayed: 0, totalWinnings: 0.0, gamesWon: 0, lastGameSession: 0) # Creating an Admin account.
-      User.create(username: "Moderator", password: "moderator", isAdmin: true, gamesPlayed: 0, totalWinnings: 0.0, gamesWon: 0, lastGameSession: 0)
-      User.create(username: "User", password: "user", isAdmin: false, gamesPlayed: 0, totalWinnings: 0.0, gamesWon: 0, lastGameSession: 0)
   end
 end

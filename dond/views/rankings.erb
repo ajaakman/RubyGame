@@ -1,44 +1,25 @@
+<h1>User Rankings</h1><br>    
+<p>Users with the most amount of wins.</p>
 
-    <h1>User Rankings</h1><br>
-    
-    <p>Users with the most amount of wins.</p>
-    
-    <div class="users"> 
-        
-        <div class="table_header">
-        
-            <div class="table_cell">Username</div>
-                
-			<div class="table_cell">Games Won</div>
-			
-            <div class="table_cell">Games Played</div>
-			
-			<div class="table_cell">Win Percent</div>
-			
-			<div class="table_cell">Average Winnings</div>
-			
-			<div class="table_cell">Total <br>Winnings</div>
-                
-        </div>
-        
-        <% @list4.each do |liste| %>   
-        
-            <div class="user">  
-        
-                <div class="table_cell"><%= liste.username %></div>
-        
-				<div class="table_cell"><%= liste.gamesWon %></div>
-				
-                <div class="table_cell"><%= liste.gamesPlayed %></div>
-				
-				<div class="table_cell"><%= ((liste.gamesWon.to_f/liste.gamesPlayed.to_f).round(2))*100 %>%</div>
-				
-				<div class="table_cell"><%= (liste.totalWinnings/liste.gamesPlayed).round(2) %></div>
-				
-				<div class="table_cell"><%= liste.totalWinnings.round(2) %></div>
-            
-            </div>   
-     
-        <% end %>
-    
-    </div>
+<div class="users">         
+	<div class="table_header">        
+		<div class="table_cell">Username</div>                
+		<div class="table_cell">Games Won</div>			
+		<div class="table_cell">Games Played</div>			
+		<div class="table_cell">Win Percent</div>			
+		<div class="table_cell">Average Winnings</div>			
+		<div class="table_cell">Total <br>Winnings</div>                
+	</div>
+	
+	<% @list4.each do |liste| %>           
+		<div class="user">          
+			<div class="table_cell"><%= liste.username %></div>        
+			<div class="table_cell"><%= liste.gamesWon %></div>				
+			<div class="table_cell"><%= liste.gamesPlayed %></div>				
+			<div class="table_cell"><%= ((liste.gamesWon.to_f/liste.gamesPlayed.to_f).round(2))*100 %>%</div>				
+			<div class="table_cell"><%= (liste.totalWinnings/liste.gamesPlayed).round(2) %></div>				
+			<div class="table_cell"><%= liste.totalWinnings.round(2) %></div>            
+		</div>        
+	<% end %>
+	
+</div>
