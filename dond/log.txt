@@ -379,3 +379,11 @@
 22 03 2018 at 07:30PM	Admin	Admin resumed a game with id: 28
 
 22 03 2018 at 07:30PM	Admin	Admin opened chosen box and finshed a game
+
+22 03 2018 at 07:58PM	Unknow	Guest started a new game
+
+22 03 2018 at 07:58PM	Admin	User Logged in with user id: Admin
+
+22 03 2018 at 07:58PM	Admin	Admin started a new game
+
+22 03 2018 at 07:58PM	Admin	Admin accpeted an offer and finshed a game
