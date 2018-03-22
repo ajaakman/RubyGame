@@ -249,3 +249,133 @@
 22 03 2018 at 02:32PM	test3	test3 started a new game
 
 22 03 2018 at 02:32PM	test3	test3 resumed a game with id: 231
+
+22 03 2018 at 07:19PM	Unknow	New user signed up with user id User
+
+22 03 2018 at 07:19PM	Unknow	Guest started a new game
+
+22 03 2018 at 07:19PM	Unknow	Guest accpeted an offer and finshed a game
+
+22 03 2018 at 07:19PM	Unknow	Guest started a new game
+
+22 03 2018 at 07:19PM	Unknow	Guest accpeted an offer and finshed a game
+
+22 03 2018 at 07:19PM	Unknow	Guest started a new game
+
+22 03 2018 at 07:19PM	Unknow	Guest accpeted an offer and finshed a game
+
+22 03 2018 at 07:19PM	Unknow	Guest started a new game
+
+22 03 2018 at 07:20PM	Unknow	Guest accpeted an offer and finshed a game
+
+22 03 2018 at 07:20PM	User	User Logged in with user id: User
+
+22 03 2018 at 07:20PM	User	User started a new game
+
+22 03 2018 at 07:20PM	User	User accpeted an offer and finshed a game
+
+22 03 2018 at 07:20PM	User	User started a new game
+
+22 03 2018 at 07:20PM	User	User accpeted an offer and finshed a game
+
+22 03 2018 at 07:20PM	User	User started a new game
+
+22 03 2018 at 07:20PM	User	User accpeted an offer and finshed a game
+
+22 03 2018 at 07:20PM	User	User started a new game
+
+22 03 2018 at 07:20PM	User	User accpeted an offer and finshed a game
+
+22 03 2018 at 07:21PM		New user signed up with user id Guest
+
+22 03 2018 at 07:21PM		New user signed up with user id test
+
+22 03 2018 at 07:21PM		Guest started a new game
+
+22 03 2018 at 07:21PM		Guest accpeted an offer and finshed a game
+
+22 03 2018 at 07:21PM		Guest started a new game
+
+22 03 2018 at 07:21PM	test	User Logged in with user id: test
+
+22 03 2018 at 07:21PM	test	test started a new game
+
+22 03 2018 at 07:21PM	test	test accpeted an offer and finshed a game
+
+22 03 2018 at 07:21PM	test	test started a new game
+
+22 03 2018 at 07:21PM	test	test accpeted an offer and finshed a game
+
+22 03 2018 at 07:21PM	test	test started a new game
+
+22 03 2018 at 07:21PM	test	test accpeted an offer and finshed a game
+
+22 03 2018 at 07:21PM	test	test started a new game
+
+22 03 2018 at 07:21PM	test	test accpeted an offer and finshed a game
+
+22 03 2018 at 07:22PM	test	test started a new game
+
+22 03 2018 at 07:22PM	test	test accpeted an offer and finshed a game
+
+22 03 2018 at 07:22PM	test	test started a new game
+
+22 03 2018 at 07:22PM	test	test accpeted an offer and finshed a game
+
+22 03 2018 at 07:22PM	Admin	User Logged in with user id: Admin
+
+22 03 2018 at 07:22PM	Admin	Admin started a new game
+
+22 03 2018 at 07:22PM	Admin	Admin accpeted an offer and finshed a game
+
+22 03 2018 at 07:22PM	Admin	Admin started a new game
+
+22 03 2018 at 07:22PM	Admin	Admin accpeted an offer and finshed a game
+
+22 03 2018 at 07:22PM	Admin	Admin started a new game
+
+22 03 2018 at 07:22PM	Admin	Admin accpeted an offer and finshed a game
+
+22 03 2018 at 07:22PM	Admin	Admin started a new game
+
+22 03 2018 at 07:22PM	Admin	Admin accpeted an offer and finshed a game
+
+22 03 2018 at 07:22PM	Admin	Admin started a new game
+
+22 03 2018 at 07:22PM	Admin	Admin accpeted an offer and finshed a game
+
+22 03 2018 at 07:23PM	Admin	Admin started a new game
+
+22 03 2018 at 07:23PM	Admin	Admin accpeted an offer and finshed a game
+
+22 03 2018 at 07:23PM	Admin	Admin resumed a game with id: 23
+
+22 03 2018 at 07:23PM	Admin	Admin started a new game
+
+22 03 2018 at 07:23PM	Admin	Admin accpeted an offer and finshed a game
+
+22 03 2018 at 07:24PM	Unknow	Guest started a new game
+
+22 03 2018 at 07:25PM	Unknow	Guest accpeted an offer and finshed a game
+
+22 03 2018 at 07:25PM	Admin	User Logged in with user id: Admin
+
+22 03 2018 at 07:25PM	Admin	Admin started a new game
+
+22 03 2018 at 07:25PM	Admin	Admin resumed a game with id: 26
+
+22 03 2018 at 07:26PM	Admin	Admin opened chosen box and finshed a game
+
+22 03 2018 at 07:29PM	Unknow	Guest started a new game
+
+22 03 2018 at 07:29PM	Unknow	Guest accpeted an offer and finshed a game
+
+22 03 2018 at 07:29PM	Admin	User Logged in with user id: Admin
+
+22 03 2018 at 07:29PM	Admin	Admin started a new game
+
+22 03 2018 at 07:30PM	Admin	User Logged in with user id: Admin
+
+22 03 2018 at 07:30PM	Admin	Admin resumed a game with id: 28
+
+22 03 2018 at 07:30PM	Admin	Admin opened chosen box and finshed a game
